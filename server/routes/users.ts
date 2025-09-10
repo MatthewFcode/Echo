@@ -1,46 +1,37 @@
 import { Router } from 'express'
 import checkJwt, { JwtRequest } from '../auth0.ts'
-import { StatusCodes } from 'http-status-codes'
 
-import * as db from '../db/fruits.ts'
+import * as db from '../db/functions/users.ts'
 
 const router = Router()
 
-router.get('/', async (req, res) => {
+router.get('/', checkJwt, async (req: JwtRequest, res) => {
   try {
-    const fruits = await db.getAllFruits()
-
-    res.json({ fruits: fruits.map((fruit) => fruit.name) })
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ message: 'Something went wrong' })
-  }
-})
-
-router.get('/:id', async (req, res, next) => {
-  try {
-    const fruit = await db.getFruitById(req.params.id)
-    res.json(fruit)
+    const auth0Id = req.auth?.sub
+    const result = await db.getUserById(auth0Id as string)
+    res.json({ result })
   } catch (err) {
-    next(err)
+    console.log(err)
+    res.sendStatus(500)
   }
 })
 
-router.post('/', checkJwt, async (req: JwtRequest, res, next) => {
-  if (!req.auth?.sub) {
-    res.sendStatus(StatusCodes.UNAUTHORIZED)
-    return
-  }
-
+router.post('/', checkJwt, async (req: JwtRequest, res) => {
   try {
-    const { owner, name } = req.body
-    const id = await db.addFruit({ owner, name })
-    res
-      .setHeader('Location', `${req.baseUrl}/${id}`)
-      .sendStatus(StatusCodes.CREATED)
+    const auth0Id = req.auth?.sub
+    const { username, profilePic, chatId } = req.body
+    const convert = {
+      user_name: username as string,
+      profile_pic: profilePic as string,
+      chat_id: chatId as number,
+      auth0id: auth0Id as string,
+    }
+
+    const result = await db.createUser(convert)
+    res.json(result)
   } catch (err) {
-    next(err)
+    console.log(err)
+    res.status(400).json('bad post reequest')
   }
 })
-
 export default router

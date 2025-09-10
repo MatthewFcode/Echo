@@ -1,17 +1,31 @@
-import db from './connection.ts'
-import { Fruit, FruitData } from '../../models/fruit.ts'
+import connection from '../connection.ts'
+import { UserData } from '../../../models/User.ts'
+const db = connection
 
-export async function getAllFruits() {
-  const fruit = await db('fruit').select()
-  return fruit as Fruit[]
+// function for getting user data by their auth0Id e.g yourself
+export async function getUserById(
+  auth0Id: string,
+): Promise<UserData[] | undefined> {
+  try {
+    const result = await db('users').where('users.auth0id', auth0Id).first()
+    return result
+  } catch (err) {
+    console.log(err)
+  }
 }
 
-export async function getFruitById(id: number | string) {
-  const fruit = await db('fruit').select().first().where({ id })
-  return fruit as Fruit
-}
+//function for adding a user thorugh the rego form
 
-export async function addFruit(data: FruitData) {
-  const [id] = await db('fruit').insert(data)
-  return id
+export async function createUser(newUser: {
+  auth0id: string
+  user_name: string
+  profile_pic: string
+  chat_id: number
+}): Promise<UserData[] | undefined> {
+  try {
+    const result = await db('users').insert(newUser).returning('*')
+    return result
+  } catch (err) {
+    console.log(err)
+  }
 }
