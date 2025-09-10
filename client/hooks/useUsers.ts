@@ -27,7 +27,7 @@ export function useUserMutation<TData = unknown, TVariables = unknown>(
   const mutation = useMutation({
     mutationFn,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['users'] })
+      queryClient.invalidateQueries({ queryKey: ['addUser'] })
     },
   })
 
@@ -43,7 +43,7 @@ export function useUserById(id: number) {
   const { user, getAccessTokenSilently } = useAuth0()
 
   const query = useQuery({
-    queryKey: ['users'],
+    queryKey: ['userById'],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
       return getUserById(token, id)
