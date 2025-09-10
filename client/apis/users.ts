@@ -20,10 +20,10 @@ export async function getUserById(token: string, id: number) {
 }
 
 // POST /api/v1/users (add a new user)
-export async function addUser(token: string, user: UserData) {
+export async function addUser(token: string, newUser: UserData) {
   return request
     .post(`${rootURL}/users`)
     .set('Authorization', `Bearer ${token}`)
-    .send(user)
-    .then((res) => res.body.user)
+    .send(newUser)
+    .then((res) => res.body.newUser)
 }
