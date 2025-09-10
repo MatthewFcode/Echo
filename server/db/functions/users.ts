@@ -2,6 +2,16 @@ import connection from '../connection.ts'
 import { UserData } from '../../../models/User.ts'
 const db = connection
 
+//function for gettting all users
+export async function getAllUsers() {
+  try {
+    const result = await db('users').select()
+    return result
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 // function for getting user data by their auth0Id e.g yourself
 export async function getUserById(
   auth0Id: string,

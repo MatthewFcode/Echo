@@ -5,6 +5,17 @@ import * as db from '../db/functions/users.ts'
 
 const router = Router()
 
+// getting all the users (auth protected but no auth Id needed to go in to the function so it isnt grabbeb out)
+router.get('/', checkJwt, async (req: JwtRequest, res) => {
+  try {
+    const result = await db.getAllUsers()
+    res.json(result)
+  } catch (err) {
+    console.log(err)
+    res.send(500).json('Internal Server Error')
+  }
+})
+
 router.get('/', checkJwt, async (req: JwtRequest, res) => {
   try {
     const auth0Id = req.auth?.sub
@@ -34,4 +45,5 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
     res.status(400).json('bad post reequest')
   }
 })
+
 export default router
