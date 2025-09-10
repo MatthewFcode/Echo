@@ -1,10 +1,11 @@
-export interface Fruit {
-  id: number
-  name: string
-  owner: string
+export interface MessageData {
+  chatId: number
+  message?: string
+  image?: string
+  userId: number
+  timeStamp: string
 }
 
-export interface FruitData {
-  name: string
-  owner: string
+export interface Message extends MessageData {
+  id: number
 }
