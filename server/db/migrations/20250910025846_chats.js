@@ -6,6 +6,7 @@ export async function up(knex) {
     table.increments('id')
     table.integer('user_id').references('users.id')
     table.integer('user_id2').references('users.id')
+    table.unique(['user_id', 'user_id2'])
   })
 }
 

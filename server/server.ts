@@ -1,7 +1,9 @@
 import express from 'express'
 import * as Path from 'node:path'
 
-import fruitRoutes from './routes/fruits.ts'
+import userRoutes from './routes/users.ts'
+import chatsRoutes from './routes/chats.ts'
+import messagesRoutes from './routes/messages.ts'
 
 const server = express()
 

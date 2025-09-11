@@ -1,23 +1,72 @@
 import { Router } from 'express'
-import checkJwt, { JwtRequest } from '../auth0'
-import { StatusCodes } from 'http-status-codes'
+import checkJwt, { JwtRequest } from '../auth0.ts'
+import multer from 'multer'
+import path from 'path'
+import * as db from '../db/functions/users.ts'
 
 const router = Router()
 
-router.get('/', (_req, res) => {
-  res.json({ message: 'Public users route (no authentication required)' })
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.resolve('public/images'))
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`)
+  },
 })
 
-router.get('/profile', checkJwt, (req: JwtRequest, res) => {
-  if (!req.auth?.sub) {
-    res.sendStatus(StatusCodes.UNAUTHORIZED)
-    return
+const upload = multer({ storage: storage })
+
+// getting all the users (auth protected but no auth Id needed to go in to the function so it isnt grabbeb out)
+router.get('/', checkJwt, async (req: JwtRequest, res) => {
+  try {
+    const result = await db.getAllUsers()
+    res.json(result)
+  } catch (err) {
+    console.log(err)
+    res.send(500).json('Internal Server Error')
   }
-
-  res.json({
-    message: 'Protected route: valid token received',
-    user: req.auth,
-  })
 })
+
+router.get('/', checkJwt, async (req: JwtRequest, res) => {
+  try {
+    const auth0Id = req.auth?.sub
+    const result = await db.getUserById(auth0Id as string)
+    res.json({ result })
+  } catch (err) {
+    console.log(err)
+    res.sendStatus(500)
+  }
+})
+
+router.post(
+  '/',
+  checkJwt,
+  upload.single('profile_pic'),
+  async (req: JwtRequest, res) => {
+    try {
+      const auth0Id = req.auth?.sub
+      const { username, chatId } = req.body
+      // handling multer
+      let profilePhotoUrl = ''
+      if (req.file) {
+        // Store the relative path to the uploaded file
+        profilePhotoUrl = `/images/${req.file.filename}`
+      }
+      const convert = {
+        user_name: username as string,
+        profile_pic: profilePhotoUrl,
+        chat_id: chatId as number,
+        auth0id: auth0Id as string,
+      }
+
+      const result = await db.createUser(convert)
+      res.json(result)
+    } catch (err) {
+      console.log(err)
+      res.status(400).json('bad post reequest')
+    }
+  },
+)
 
 export default router
