@@ -60,7 +60,7 @@ router.post(
       }
 
       const result = await db.createUser(convert)
-      res.json(result)
+      res.status(201).json(result)
     } catch (err) {
       console.log(err)
       res.status(400).json('bad post reequest')
