@@ -2,13 +2,13 @@ import { useQuery } from '@tanstack/react-query'
 import { getChats, getChatById } from '../apis/chats'
 import { useAuth0 } from '@auth0/auth0-react'
 
-export async function useChats() {
+export async function useChats(userId: number) {
   const { user, getAccessTokenSilently } = useAuth0()
   const query = useQuery({
     queryKey: ['chats'],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
-      getChats(token)
+      return getChats(token, userId)
     },
     enabled: !!user,
     refetchOnWindowFocus: true,

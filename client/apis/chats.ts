@@ -4,10 +4,12 @@ import { Chat } from '../../models/Chat'
 const rootURL = new URL(`/api/v1`, document.baseURI)
 
 // GET /api/v1/chats (gets all chats)
-export async function getChats(token: string) {
+export async function getChats(token: string, userId: number) {
   const response = await request
-    .get(`${rootURL}/chats`)
+    .get(`${rootURL}/chats/all/${userId}`)
     .set('Authorization', `Bearer ${token}`)
+    // .then((res) => (res.body ? res.body : null))
+    // .catch((error) => console.log(error))
   return response.body as Chat[]
 }
 
