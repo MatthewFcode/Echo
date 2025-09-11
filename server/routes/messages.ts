@@ -5,8 +5,8 @@ const router = Router()
 
 router.get('/', async (req, res) => {
   try {
-    const { chatId, userId } = req.body
-    const result = await db.getMessagesByChatIDAndUserId(chatId, userId)
+    const { chatId } = req.body
+    const result = await db.getMessagesByChatID(chatId)
     res.json(result)
   } catch (err) {
     console.log(err)
@@ -18,17 +18,14 @@ router.post('/', async (req, res) => {
   try {
     const { chatId, message, image, userId, timeStamp } = req.body
 
-    const chat_id = chatId
-    const user_id = userId
-
     const newChat = {
       message: message,
       image: image,
       time_stamp: timeStamp,
-      chat_id,
-      user_id,
+      chat_id: chatId,
+      user_id: userId,
     }
-    const result = await db.sendChat(newChat, chat_id, user_id)
+    const result = await db.sendChat(newChat)
     res.json(result)
   } catch (err) {
     console.log(err)
