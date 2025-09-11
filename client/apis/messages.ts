@@ -1,5 +1,6 @@
 import request from 'superagent'
-import { Message } from '../../models/Message'
+import { Message, MessageData } from '../../models/Message'
+import { Chat } from '../../models/Chat'
 
 const rootURL = new URL(`/api/v1`, document.baseURI)
 
@@ -16,4 +17,15 @@ export async function addMessage({token, newMessage}: AddMessageFunction): Promi
     .send(newMessage)
     .then((res) => res.body.newMessage) as unknown as Message
     
+}
+
+interface getMessageByChatIdFunction {
+  id: Chat["id"]
+  token: string
+}
+
+// GET /api/v1/messages/:id (gets messages by chat id)
+export async function getMessageByChatId({token, id}: getMessageByChatIdFunction): Promise<MessageData[]> {
+  const response = await request.get(`${rootURL}/messages/${id}`).set('Authorization', `Bearer ${token}`)
+  return response.body as MessageData[]
 }

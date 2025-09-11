@@ -35,3 +35,6 @@ export async function useChatById(id: number) {
     ...query
   }
 }
+
+// timeout interval in useQuery docs - can set to 1 min / 5 mins (auto refresh)
+// https://tanstack.com/query/v5/docs/framework/react/reference/useQuery
