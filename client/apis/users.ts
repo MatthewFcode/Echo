@@ -14,6 +14,7 @@ export async function getUsers({
   const response = await request
     .get(`${rootURL}/users`)
     .set('Authorization', `Bearer ${token}`)
+    .then((res) => (res.body.user ? res.body.user : null))
   return response.body as User
 }
 
@@ -39,5 +40,5 @@ export async function addUser({
     .post(`${rootURL}/users`)
     .set('Authorization', `Bearer ${token}`)
     .send(newUser)
-    .then((res) => res.body.newUser)
+    .then((res) => res.body.user)
 }

@@ -5,7 +5,7 @@ import { JwtPayload } from 'jsonwebtoken'
 import jwks from 'jwks-rsa'
 
 // TODO: set the domain and audience (API Identifier)
-const domain = 'dev-71qzprfwkky36j3j.us.auth0.com'
+const domain = 'https://hotoke-abe.au.auth0.com'
 const audience = 'https://whats-up/api'
 
 const checkJwt = jwt({

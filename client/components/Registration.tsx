@@ -33,6 +33,7 @@ function Register() {
   })
 
   useEffect(() => {
+    console.log(user)
     if (user.data) navigate('/')
   }, [user.data, navigate])
 

@@ -25,8 +25,9 @@ function Nav() {
       <nav>
         <IfAuthenticated>
           <button onClick={handleSignOut}>Sign out</button>
-          {user && <p>Signed in as: {user?.userName}</p>}
-          {userData?.userName && <p>Favourite fruit: {userData?.userName}</p>}
+          {user && <p>Signed in as: {user?.nickname}</p>}
+          {userData?.userName && (
+            <p>Username: {userData.userName}</p>)}
         </IfAuthenticated>
         <IfNotAuthenticated>
           <button onClick={handleSignIn}>Sign in</button>
