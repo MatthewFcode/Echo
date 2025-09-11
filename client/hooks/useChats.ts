@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query"
-import { getChats, getChatById } from "../apis/chats"
-import { useAuth0 } from "@auth0/auth0-react"
+import { useQuery } from '@tanstack/react-query'
+import { getChats, getChatById } from '../apis/chats'
+import { useAuth0 } from '@auth0/auth0-react'
 
 export async function useChats() {
   const { user, getAccessTokenSilently } = useAuth0()
@@ -15,7 +15,7 @@ export async function useChats() {
     refetchOnMount: true,
   })
   return {
-    ...query
+    ...query,
   }
 }
 
@@ -30,11 +30,9 @@ export async function useChatById(id: number) {
     enabled: !!user,
     refetchOnWindowFocus: true,
     refetchOnMount: true,
+    refetchInterval: 30000, // time in milliseconds before refetch / data refresh - 30000 is 30 seconds
   })
   return {
-    ...query
+    ...query,
   }
 }
-
-// timeout interval in useQuery docs - can set to 1 min / 5 mins (auto refresh)
-// https://tanstack.com/query/v5/docs/framework/react/reference/useQuery
