@@ -1,6 +1,6 @@
 import express from 'express'
 import * as Path from 'node:path'
-
+import path from 'path'
 import userRoutes from './routes/users.ts'
 import chatsRoutes from './routes/chats.ts'
 import messagesRoutes from './routes/messages.ts'
@@ -12,6 +12,8 @@ server.use(express.json())
 server.use('/api/v1/users', userRoutes)
 server.use('/api/v1/chats', chatsRoutes)
 server.use('api/v1/messages', messagesRoutes)
+//serving user images
+server.use('/images', express.static(path.resolve('public/images')))
 
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static(Path.resolve('public')))
