@@ -1,5 +1,5 @@
 import { MutationFunction, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { getUsers, getUserById, addUser } from '../apis/users'
+import { getMe, getUserById, addUser } from '../apis/users'
 import { useAuth0 } from '@auth0/auth0-react'
 
 export function useUsers() {
@@ -9,7 +9,7 @@ export function useUsers() {
     queryKey: ['users'],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
-      return getUsers({ token })
+      return getMe({ token })
     },
     enabled: !!user,
   })

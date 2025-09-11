@@ -70,6 +70,7 @@ function Register() {
             <div>
               <label htmlFor="userName">User: </label>
               <input
+              style={{border: '1px solid black', margin: '0.2vw'}}
                 type="text"
                 id="userName"
                 name="userName"
@@ -78,7 +79,7 @@ function Register() {
               />
             </div>
             <div>
-              <button disabled={!form.userName}>Register</button>
+              <button style={{border: '1px solid black', margin: '0.2vw'}} disabled={!form.userName}>Register</button>
             </div>
           </form>
         </IfAuthenticated>

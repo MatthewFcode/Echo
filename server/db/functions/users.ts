@@ -30,7 +30,6 @@ export async function createUser(newUser: {
   auth0id: string
   user_name: string
   profile_pic: string
-  chat_id: number
 }): Promise<UserData[] | undefined> {
   try {
     const result = await db('users').insert(newUser).returning('*')
