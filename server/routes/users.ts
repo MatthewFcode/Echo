@@ -28,7 +28,7 @@ router.get('/', checkJwt, async (req: JwtRequest, res) => {
   }
 })
 
-router.get('/', checkJwt, async (req: JwtRequest, res) => {
+router.get('/me', checkJwt, async (req: JwtRequest, res) => {
   try {
     const auth0Id = req.auth?.sub
     const result = await db.getUserById(auth0Id as string)
