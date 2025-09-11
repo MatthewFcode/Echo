@@ -32,7 +32,7 @@ router.get('/me', checkJwt, async (req: JwtRequest, res) => {
   try {
     const auth0Id = req.auth?.sub
     const result = await db.getUserById(auth0Id as string)
-    res.json({ result })
+    res.json({ user: result })
   } catch (err) {
     console.log(err)
     res.sendStatus(500)
@@ -46,7 +46,7 @@ router.post(
   async (req: JwtRequest, res) => {
     try {
       const auth0Id = req.auth?.sub
-      const { username, chatId } = req.body
+      const { username } = req.body
       // handling multer
       let profilePhotoUrl = ''
       if (req.file) {
@@ -56,7 +56,6 @@ router.post(
       const convert = {
         user_name: username as string,
         profile_pic: profilePhotoUrl,
-        chat_id: chatId as number,
         auth0id: auth0Id as string,
       }
 

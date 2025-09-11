@@ -12,11 +12,11 @@ const queryClient = new QueryClient()
 document.addEventListener('DOMContentLoaded', () => {
   createRoot(document.getElementById('app') as HTMLElement).render(
     <Auth0Provider
-      domain="dev-71qzprfwkky36j3j.us.auth0.com"
-      clientId="WJjUzqP9KYRWSpoAF8BR4MrJyBiwoiw7"
+      domain="hotoke-abe.au.auth0.com"
+      clientId="arWw3LGnl42UsnTHNyoLINt6kDAgGTEE"
       authorizationParams={{
         redirect_uri: window.location.origin,
-        audience: 'https://dev-71qzprfwkky36j3j.us.auth0.com/api/v2/',
+        audience: 'https://whats-up/api',
       }}
     >
       <QueryClientProvider client={queryClient}>

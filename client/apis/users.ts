@@ -8,13 +8,14 @@ interface GetUserFunction {
 }
 
 // GET /api/v1/users (gets all users)
-export async function getUsers({
+export async function getMe({
   token,
 }: GetUserFunction): Promise<User | null> {
-  const response = await request
-    .get(`${rootURL}/users`)
+  return await request
+    .get(`${rootURL}/users/me`)
     .set('Authorization', `Bearer ${token}`)
-  return response.body as User
+    .then((res) => (res.body.user ? res.body.user : null))
+    .catch((error) => console.log(error))
 }
 
 // GET /api/v1/users/:id (get a specific user by id)
@@ -35,9 +36,9 @@ export async function addUser({
   newUser,
   token,
 }: AddUserFunction): Promise<User> {
-  return request
+  return await request
     .post(`${rootURL}/users`)
     .set('Authorization', `Bearer ${token}`)
     .send(newUser)
-    .then((res) => res.body.newUser)
+    .then((res) => res.body)
 }
