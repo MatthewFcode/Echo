@@ -7,7 +7,9 @@ const server = express()
 
 server.use(express.json())
 
-server.use('/api/v1/fruits', fruitRoutes)
+server.use('/api/v1/users', userRoutes)
+server.use('/api/v1/chats', chatsRoutes)
+server.use('api/v1/messages', messagesRoutes)
 
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static(Path.resolve('public')))

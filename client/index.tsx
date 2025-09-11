@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
       clientId="WJjUzqP9KYRWSpoAF8BR4MrJyBiwoiw7"
       authorizationParams={{
         redirect_uri: window.location.origin,
-        audience: 'https://dev-71qzprfwkky36j3j.us.auth0.com/api/v2/',
+        audience: 'https://whats-up/api',
       }}
     >
       <QueryClientProvider client={queryClient}>

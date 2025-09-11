@@ -1,37 +1,20 @@
+// TODO: import useAuth0 function
 import { useAuth0 } from '@auth0/auth0-react'
 
-export default function AuthButtons() {
-  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0()
+const useIsAuthenticated = () => {
+  // TODO: call the useAuth0 hook, destructure and return isAuthenticated
+  const { isAuthenticated } = useAuth0()
+  return isAuthenticated
+}
+interface Props {
+  children: React.ReactNode
+}
+export function IfAuthenticated(props: Props) {
+  const { children } = props
+  return useIsAuthenticated() ? <>{children}</> : null
+}
 
-  return (
-    <div>
-      {!isAuthenticated ? (
-        <>
-          <button
-            onClick={() =>
-              loginWithRedirect({
-                authorizationParams: {
-                  screen_hint: 'signup',
-                },
-              })
-            }
-          >
-            Register 
-          </button>
-          <button onClick={() => loginWithRedirect()}>Login</button>
-        </>
-      ) : (
-        <>
-          <p>Welcome, {user?.name}</p>
-          <button
-            onClick={() =>
-              logout({ logoutParams: { returnTo: window.location.origin } })
-            }
-          >
-            Logout
-          </button>
-        </>
-      )}
-    </div>
-  )
+export function IfNotAuthenticated(props: Props) {
+  const { children } = props
+  return !useIsAuthenticated() ? <>{children}</> : null
 }
