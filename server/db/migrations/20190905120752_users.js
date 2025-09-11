@@ -7,7 +7,6 @@ export async function up(knex) {
     table.string('auth0id')
     table.string('user_name')
     table.string('profile_pic')
-    table.integer('chat_id')
   })
 }
 
