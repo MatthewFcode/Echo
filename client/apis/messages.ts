@@ -15,7 +15,8 @@ export async function addMessage({token, newMessage}: AddMessageFunction): Promi
     .post(`${rootURL}/messages`)
     .set('Authorization', `Bearer ${token}`)
     .send(newMessage)
-    .then((res) => res.body.newMessage) as unknown as Message
+    .then((res) => res.body) as unknown as Message
+    
     
 }
 
