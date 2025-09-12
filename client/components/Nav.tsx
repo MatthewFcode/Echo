@@ -23,10 +23,10 @@ function Nav() {
     })
   }
 
-  if (isPending) {
+  if (data !== undefined && isPending) {
     return <p>Loading...</p>
   }
-  if (isError) {
+  if (data !== undefined && isError) {
     return <p>There was an error</p>
   }
 
@@ -37,22 +37,22 @@ function Nav() {
           <button onClick={handleSignOut}>Sign out</button>
           {user && <p>Signed in as: {user?.nickname}</p>}
           {userData?.userName && <p>Username: {userData.userName}</p>}
-        </IfAuthenticated>
-        <IfNotAuthenticated>
-          <button onClick={handleSignIn}>Sign in</button>
-        </IfNotAuthenticated>
-        <div>
+          <div>
           <h1>Chats: </h1>
           <p>
-            {data.map((chat) => {
+            {data !== undefined ? data.map((chat) => {
               return (
                 <div key={chat.id}>
                   <p>Chat Id: {chat.id}</p>
                 </div>
               )
-            })}
+            }) : <p></p>}
           </p>
         </div>
+        </IfAuthenticated>
+        <IfNotAuthenticated>
+          <button onClick={handleSignIn}>Sign in</button>
+        </IfNotAuthenticated>
       </nav>
     </>
   )
