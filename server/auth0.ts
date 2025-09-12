@@ -8,7 +8,9 @@ import jwks from 'jwks-rsa'
 const domain = 'https://hotoke-abe.au.auth0.com'
 const audience = 'https://whats-up/api'
 
-const checkJwt = jwt({
+const isTest = process.env.NODE_ENV === 'test'
+
+const checkJwt = isTest ? jwt({secret: 'test-secret', algorithms: ['HS256']}) : jwt({
   secret: jwks.expressJwtSecret({
     cache: true,
     rateLimit: true,
