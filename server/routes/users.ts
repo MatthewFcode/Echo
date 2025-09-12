@@ -46,16 +46,16 @@ router.post(
   async (req: JwtRequest, res) => {
     try {
       const auth0Id = req.auth?.sub
-      const { username } = req.body
+      const { userName } = req.body
       // handling multer
-      let profilePhotoUrl = ''
+      let profilePic = ''
       if (req.file) {
         // Store the relative path to the uploaded file
-        profilePhotoUrl = `/images/${req.file.filename}`
+        profilePic = `/images/${req.file.filename}`
       }
       const convert = {
-        user_name: username as string,
-        profile_pic: profilePhotoUrl,
+        user_name: userName as string,
+        profile_pic: profilePic,
         auth0id: auth0Id as string,
       }
 
