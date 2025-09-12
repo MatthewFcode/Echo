@@ -8,9 +8,6 @@ export async function getChats(token: string, userId: number) {
   const response = await request
     .get(`${rootURL}/chats/all/${userId}`)
     .set('Authorization', `Bearer ${token}`)
-    console.log(response.body)
-    // .then((res) => (res.body ? res.body : null))
-    // .catch((error) => console.log(error))
   return response.body as Chat[]
 }
 

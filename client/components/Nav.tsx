@@ -9,10 +9,7 @@ function Nav() {
   const { logout, loginWithRedirect, user } = useAuth0()
   const { data: userData } = useUsers()
   const userId = userData?.id
-  // console.log(userId)
   const { data, isPending, isError } = useChats(userId as number)
-
-  console.log(data)
 
   const handleSignOut = () => {
     logout()

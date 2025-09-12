@@ -11,7 +11,6 @@ interface AddMessageFunction {
 
 // POST /api/v1/messages (sends a message)
 export async function addMessage({token, newMessage}: AddMessageFunction): Promise<Message> {
-  console.log(request)
   return await request
     .post(`${rootURL}/messages`)
     .set('Authorization', `Bearer ${token}`)
