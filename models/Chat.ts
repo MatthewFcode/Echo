@@ -6,3 +6,16 @@ export interface ChatData {
 export interface Chat extends ChatData {
   id: number
 }
+
+export interface BothUsers {
+  id: number
+  u1Id: number
+  u1UserName: string
+  u1Auth0Id: string
+  u1ProfilePic: string
+  u2Id: number
+  u2UserName: string
+  u2Auth0Id: string
+  u2ProfilePic: string
+}
+

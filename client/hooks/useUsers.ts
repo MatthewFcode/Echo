@@ -42,15 +42,15 @@ export function useAddUser() {
 export function useUserById(id: number) {
   const { user, getAccessTokenSilently } = useAuth0()
 
-  const query = useQuery({
-    queryKey: ['userById'],
+  return useQuery({
+    queryKey: ['userById', id],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
       return getUserById(token, id)
     },
-    enabled: !!user
+    enabled: !!user && !!id
   })
-  return {
-  ...query
-  }
+  
+
+  
 }
