@@ -9,7 +9,8 @@ function Nav() {
   const { logout, loginWithRedirect, user } = useAuth0()
   const { data: userData } = useUsers()
   const userId = userData?.id
-  const {data, isPending, isError} = useChats(userId as number)
+  // console.log(userId)
+  const { data, isPending, isError } = useChats(userId as number)
 
   console.log(data)
 
@@ -25,20 +26,35 @@ function Nav() {
     })
   }
 
+  if (isPending) {
+    return <p>Loading...</p>
+  }
+  if (isError) {
+    return <p>There was an error</p>
+  }
+
   return (
     <>
       <nav>
         <IfAuthenticated>
           <button onClick={handleSignOut}>Sign out</button>
           {user && <p>Signed in as: {user?.nickname}</p>}
-          {userData?.userName && (
-            <p>Username: {userData.userName}</p>)}
+          {userData?.userName && <p>Username: {userData.userName}</p>}
         </IfAuthenticated>
         <IfNotAuthenticated>
           <button onClick={handleSignIn}>Sign in</button>
         </IfNotAuthenticated>
         <div>
-          {}
+          <h1>Chats: </h1>
+          <p>
+            {data.map((chat) => {
+              return (
+                <div key={chat.id}>
+                  <p>Chat Id: {chat.id}</p>
+                </div>
+              )
+            })}
+          </p>
         </div>
       </nav>
     </>

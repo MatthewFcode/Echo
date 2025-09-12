@@ -31,7 +31,7 @@ export async function getChat(userId: number, userId2: number) {
 
 export async function getAllChats(userId: number) {
   try {
-    const chats = await db('chats').where(userId).select('*')
+    const chats = await db('chats').where('user_id', userId).orWhere('user_id2', userId).select('*')
     return chats
   } catch (err) {
     console.log(err)

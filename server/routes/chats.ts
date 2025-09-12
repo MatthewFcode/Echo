@@ -19,7 +19,9 @@ router.get('/', async (req, res) => {
 router.get('/all/:id', async (req, res) => {
   try {
     const userId = Number(req.params.id)
+    console.log(userId)
     const result = await db.getAllChats(userId)
+    console.log(result)
     res.json(result)
   } catch (err) {
     console.log(err)
