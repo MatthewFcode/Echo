@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes'
 import connection from '../db/connection'
 import server from '../server'
 import request from 'supertest'
-// import jwt from 'jsonwebtoken'
 
 const db = connection
 

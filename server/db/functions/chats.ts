@@ -57,7 +57,7 @@ export async function createChat(userId: number, userId2: number) {
   try {
     const result = await db('chats').insert({
       user_id: userId,
-      user_Id2: userId2,
+      user_id2: userId2,
     })
     return result
   } catch (err) {
