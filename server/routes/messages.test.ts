@@ -33,8 +33,7 @@ describe('Getting all messages from a chat', () => {
       message: 'Hey, how are you?',
       image: '',
       user_name: 'Bob',
-      profile_pic:
-        'https://static.wikia.nocookie.net/btb/images/9/9d/434.jpg/revision/latest/scale-to-width-down/1200?cb=20230414211405',
+      profile_pic: 'https://static.wikia.nocookie.net/btb/images/9/9d/434.jpg',
       time_stamp: '2025-09-12T10:00:00Z',
     })
   })

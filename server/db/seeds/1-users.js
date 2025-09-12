@@ -20,5 +20,11 @@ export async function seed(knex) {
       profile_pic:
         'https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg',
     },
+    {
+      id: 3,
+      auth0id: 'auth0|test-user-id',
+      user_name: 'Test User',
+      profile_pic: '/images/test.jpg',
+    },
   ])
 }

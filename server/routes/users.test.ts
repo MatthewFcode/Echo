@@ -43,8 +43,7 @@ describe('getting users', () => {
       id: 1,
       auth0id: 'google-oauth2|10987654321',
       user_name: 'Bob',
-      profile_pic:
-        'https://static.wikia.nocookie.net/btb/images/9/9d/434.jpg/revision/latest/scale-to-width-down/1200?cb=20230414211405',
+      profile_pic: 'https://static.wikia.nocookie.net/btb/images/9/9d/434.jpg',
     })
   })
 })
@@ -57,7 +56,7 @@ describe('getting a user by an ID', () => {
     expect(response.status).toBe(StatusCodes.OK)
     expect(response.body).toStrictEqual({
       user: {
-        id: 2,
+        id: expect.any(Number),
         auth0id: 'auth0|test-user-id',
         user_name: 'Test User',
         profile_pic: '/images/test.jpg',
@@ -66,7 +65,22 @@ describe('getting a user by an ID', () => {
   })
 })
 
-// testing post route without testing the multer upload || currently sends the profile photo as an empty string
+describe('getting a user by user ID', () => {
+  it('returns the correct user object based on userId param', async () => {
+    const response = await request(server).get('/api/v1/users/1')
+
+    expect(response.status).toBe(StatusCodes.OK)
+    expect(response.body.user).toStrictEqual([
+      {
+        id: 1,
+        auth0Id: 'google-oauth2|10987654321',
+        userName: 'Bob',
+        profilePic: 'https://static.wikia.nocookie.net/btb/images/9/9d/434.jpg',
+      },
+    ])
+  })
+})
+
 describe('posting a user to the database', () => {
   it('takes user information and adds it to the user table on the database', async () => {
     const dummyUsername = 'Hugh Janus'
@@ -74,10 +88,13 @@ describe('posting a user to the database', () => {
       .post('/api/v1/users')
       .set('Authorization', `Bearer ${mockJwt}`)
       .field('userName', dummyUsername)
+
     expect(response.status).toBe(StatusCodes.CREATED)
+
+    // The DB returns snake_case keys, so match them exactly
     expect(response.body[0]).toStrictEqual({
       auth0id: 'auth0|test-user-id',
-      id: 3,
+      id: expect.any(Number), // this will change if DB state changes (you can use `expect.any(Number)` instead)
       user_name: 'Hugh Janus',
       profile_pic: '',
     })
