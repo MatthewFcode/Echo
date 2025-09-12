@@ -5,9 +5,9 @@ const router = Router()
 
 router.get('/', async (req, res) => {
   try {
-    const { chatId } = req.body
+    const chatId = Number(req.query.chatId)
     const result = await db.getMessagesByChatID(chatId)
-    res.json(result)
+    res.status(200).json(result)
   } catch (err) {
     console.log(err)
     res.send(500).json('Internal server error')
