@@ -14,13 +14,13 @@ export async function getChat(userId: number, userId2: number) {
       .select(
         'chats.id',
         'u1.id as u1Id',
-        'u1.user_name as u1username',
-        'u1.auth0id as u1auth0id',
-        'u1.profile_pic as u1profilePic',
+        'u1.user_name as u1UserName',
+        'u1.auth0id as u1Auth0Id',
+        'u1.profile_pic as u1ProfilePic',
         'u2.id as u2Id',
-        'u2.user_name as u2username',
-        'u2.auth0id as u2auth0id',
-        'u2.profile_pic as u2profilePic',
+        'u2.user_name as u2UserName',
+        'u2.auth0id as u2Auth0Id',
+        'u2.profile_pic as u2ProfilePic',
       )
       .first()
     return chat
@@ -31,7 +31,22 @@ export async function getChat(userId: number, userId2: number) {
 
 export async function getAllChats(userId: number) {
   try {
-    const chats = await db('chats').where('user_id', userId).orWhere('user_id2', userId).select('*')
+    const chats = await db('chats')
+      .where('user_id', userId)
+      .orWhere('user_id2', userId)
+      .join('users as u1', 'chats.user_id', 'u1.id')
+      .join('users as u2', 'chats.user_id2', 'u2.id')
+      .select(
+        'chats.id',
+        'u1.id as u1Id',
+        'u1.user_name as u1UserName',
+        'u1.auth0id as u1Auth0Id',
+        'u1.profile_pic as u1ProfilePic',
+        'u2.id as u2Id',
+        'u2.user_name as u2UserName',
+        'u2.auth0id as u2Auth0Id',
+        'u2.profile_pic as u2ProfilePic',
+      )
     return chats
   } catch (err) {
     console.log(err)

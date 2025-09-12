@@ -24,6 +24,24 @@ export async function getUserById(
   }
 }
 
+export async function getUserByUserId(
+  id: number,
+): Promise<UserData[] | undefined> {
+  try {
+    const result = await db('users')
+      .where('users.id', id)
+      .select(
+        'id as id',
+        'auth0id as auth0Id',
+        'user_name as userName',
+        'profile_pic as profilePic',
+      )
+    return result
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 //function for adding a user thorugh the rego form
 
 export async function createUser(newUser: {
