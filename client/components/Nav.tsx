@@ -4,12 +4,18 @@ import { IfAuthenticated, IfNotAuthenticated } from './Authorization.tsx'
 import { useAuth0 } from '@auth0/auth0-react'
 
 function Nav() {
-  // TODO: call the useAuth0 hook and destructure user, logout, and loginWithRedirect
-  // TODO: replace placeholder user object with the one from auth0
   const { logout, loginWithRedirect, user } = useAuth0()
   const { data: userData } = useUsers()
   const userId = userData?.id
   const { data, isPending, isError } = useChats(userId as number)
+
+  if (data !== undefined && isPending) {
+    return <p>Loading...</p>
+  }
+  if (data !== undefined && isError) {
+    return <p>There was an error</p>
+  }
+
 
   const handleSignOut = () => {
     logout()
@@ -23,13 +29,6 @@ function Nav() {
     })
   }
 
-  if (data !== undefined && isPending) {
-    return <p>Loading...</p>
-  }
-  if (data !== undefined && isError) {
-    return <p>There was an error</p>
-  }
-
   return (
     <>
       <nav>
@@ -38,17 +37,39 @@ function Nav() {
           {user && <p>Signed in as: {user?.nickname}</p>}
           {userData?.userName && <p>Username: {userData.userName}</p>}
           <div>
-          <h1>Chats: </h1>
-          <p>
-            {data !== undefined ? data.map((chat) => {
-              return (
-                <div key={chat.id}>
-                  <p>Chat Id: {chat.id}</p>
-                </div>
-              )
-            }) : <p></p>}
-          </p>
-        </div>
+            <h1>Chats: </h1>
+            <div>
+              {data !== undefined ? (
+                data.map((chat) => {
+                  return (
+                    <div key={chat.id}>
+                      <p>Chat Id: {chat.id}</p> 
+                      {/* Important Tereny to access both users - leave this comment here */}
+                      {chat.u2Id == userId ? (
+                        <>
+                          <p>Other User: {chat.u1UserName}</p>
+                          <img
+                            alt="imgage-of-other-user"
+                            src={chat.u1ProfilePic}
+                          ></img>
+                        </>
+                      ) : (
+                        <>
+                          <p>Other User: {chat.u2UserName}</p>
+                          <img
+                            alt="imgage-of-other-user"
+                            src={chat.u2ProfilePic}
+                          ></img>
+                        </>
+                      )}
+                    </div>
+                  )
+                })
+              ) : (
+                <p></p>
+              )}
+            </div>
+          </div>
         </IfAuthenticated>
         <IfNotAuthenticated>
           <button onClick={handleSignIn}>Sign in</button>

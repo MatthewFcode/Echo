@@ -39,6 +39,16 @@ router.get('/me', checkJwt, async (req: JwtRequest, res) => {
   }
 })
 
+router.get('/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    const result = await db.getUserByUserId(id)
+    res.json({user: result})
+  } catch (err) {
+    console.log(err)
+  }
+})
+
 router.post(
   '/',
   checkJwt,
