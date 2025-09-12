@@ -10,6 +10,7 @@ export async function getMessagesByChatID(chatId: number) {
       .join('users', 'messages.user_id', 'users.id')
       .where('messages.chat_id', chatId)
       .select(
+        'messages.chat_id',
         'message',
         'image',
         'time_stamp',

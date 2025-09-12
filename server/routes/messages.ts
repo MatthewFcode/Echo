@@ -5,8 +5,8 @@ const router = Router()
 
 router.get('/', async (req, res) => {
   try {
-    const chatId = Number(req.query.chatId)
-    const result = await db.getMessagesByChatID(chatId)
+    const chat_id = Number(req.query.chatId)
+    const result = await db.getMessagesByChatID(chat_id)
     res.status(200).json(result)
   } catch (err) {
     console.log(err)
@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
     }
     const result = await db.sendChat(newChat)
     console.log(result)
-    res.json(result)
+    res.status(201).json(result)
   } catch (err) {
     console.log(err)
     res.send(400).json('Bad post request')
