@@ -11,7 +11,7 @@ server.use(express.json())
 
 server.use('/api/v1/users', userRoutes)
 server.use('/api/v1/chats', chatsRoutes)
-server.use('api/v1/messages', messagesRoutes)
+server.use('/api/v1/messages', messagesRoutes)
 //serving user images
 server.use('/images', express.static(path.resolve('public/images')))
 

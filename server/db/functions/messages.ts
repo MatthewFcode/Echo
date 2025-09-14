@@ -24,14 +24,16 @@ export async function getMessagesByChatID(chatId: number) {
 
 // sending chat by the chat id and the user id
 export async function sendChat(newChat: {
-  chat_id: string
+  chat_id: number
   message: string
   image: string
   user_id: number
   time_stamp: string
 }) {
   try {
-    const result = await db('messages').insert(newChat).returning('*')
+    const result = await db('messages').insert(newChat)
+    console.log(result)
+    console.log(newChat)
     return result
   } catch (err) {
     console.log(err)
