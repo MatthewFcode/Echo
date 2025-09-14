@@ -23,7 +23,7 @@ export async function getUserById(token: string, id: number) {
   const response = await request
     .get(`${rootURL}/users/${id}`)
     .set('Authorization', `Bearer ${token}`)
-  return response.body as User
+  return response.body.user[0] as User
 }
 
 interface AddUserFunction {

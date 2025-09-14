@@ -26,8 +26,6 @@ router.post('/', async (req, res) => {
       user_id: userId,
     }
     const result = await db.sendChat(newChat)
-    console.log(result)
-    console.log(newChat)
     res.json(result)
   } catch (err) {
     console.log(err)

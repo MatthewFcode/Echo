@@ -39,6 +39,16 @@ router.get('/me', checkJwt, async (req: JwtRequest, res) => {
   }
 })
 
+router.get('/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    const result = await db.getUserByUserId(id)
+    res.json({user: result})
+  } catch (err) {
+    console.log(err)
+  }
+})
+
 router.post(
   '/',
   checkJwt,
@@ -46,21 +56,21 @@ router.post(
   async (req: JwtRequest, res) => {
     try {
       const auth0Id = req.auth?.sub
-      const { username } = req.body
+      const { userName } = req.body
       // handling multer
-      let profilePhotoUrl = ''
+      let profilePic = ''
       if (req.file) {
         // Store the relative path to the uploaded file
-        profilePhotoUrl = `/images/${req.file.filename}`
+        profilePic = `/images/${req.file.filename}`
       }
       const convert = {
-        user_name: username as string,
-        profile_pic: profilePhotoUrl,
+        user_name: userName as string,
+        profile_pic: profilePic,
         auth0id: auth0Id as string,
       }
 
       const result = await db.createUser(convert)
-      res.json(result)
+      res.status(201).json(result)
     } catch (err) {
       console.log(err)
       res.status(400).json('bad post reequest')
