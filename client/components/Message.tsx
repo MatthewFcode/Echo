@@ -3,7 +3,6 @@ import { useAddMessage } from '../hooks/useMessages'
 import { MessageData } from '../../models/Message'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Button } from '@radix-ui/themes'
-import { Chat } from './Chat'
 
 const empty = {
   id: '',
@@ -58,7 +57,6 @@ export default function Message() {
 
   return (
     <>
-      <Chat />
       <div className="message-container">
         <form onSubmit={handleSubmit}>
           <div className="p-8 text-center">

@@ -18,11 +18,3 @@ export async function getChatById(token: string, id: number) {
     .set('Authorization', `Bearer ${token}`)
   return response.body as Chat
 }
-
-// GET /api/v1/chatID (gets a chat by chatId)
-export async function getChatByChatId(token: string, id: number) {
-  const response = await request
-    .get(`${rootURL}/chats/${id}`)
-    .set('Authorization', `Bearer ${token}`)
-  return response.body as Chat
-}

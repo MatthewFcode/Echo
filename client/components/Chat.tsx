@@ -1,14 +1,14 @@
-// import { useState } from 'react'
 import { Callout, Text, Button } from '@radix-ui/themes'
 import { useDeleteMutation, useGetMessageByChatId } from '../hooks/useMessages.ts'
 import { useAuth0 } from '@auth0/auth0-react'
+import { useParams } from 'react-router'
+import Message from './Message.tsx'
 // import { useRouter } from 'next/navigation'
 
 export function Chat() {
-  // const { chatId } = useParams<{ chatId: string }>()
-  // const id = Number(chatId)
-  // const router = useRouter
-  const { chatById, messageByChatId } = useGetMessageByChatId(2, 2)
+  const { id } = useParams<{ id: string }>()
+  const chatId = Number(id)
+  const { chatById, messageByChatId } = useGetMessageByChatId(chatId)
   const deleteMessage = useDeleteMutation()
   const { getAccessTokenSilently } = useAuth0()
 
@@ -23,7 +23,6 @@ export function Chat() {
     }
   }
 
-  // const chatByIdData = chatById.data
   const messageByChatIdData = messageByChatId.data
   
   
@@ -35,8 +34,13 @@ export function Chat() {
     return <div>Error loading data.</div>
   }
 
+
+  // console.log(chatById.data)
+  // console.log(messageByChatId.data)
+
   return (
     <>
+    <Message />
       <div
         className="chat-container p-8 text-center"
         style={{ maxWidth: '60vw', transform: 'translate(25vw, -75vh)' }}
