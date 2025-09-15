@@ -1,5 +1,5 @@
 // import { useState } from 'react'
-import { Callout, Text, Button } from '@radix-ui/themes'
+import { Callout, Text } from '@radix-ui/themes'
 import { useGetMessageByChatId } from '../hooks/useMessages.ts'
 
 export function Chat() {
@@ -45,6 +45,7 @@ export function Chat() {
                 >
                   {message.message}
                 </Text>
+                {message.image != undefined ? <img style={{width: '10vw', paddingTop: '1vh'}} alt='message-image' src={message.image}></img> : <p></p>}
               </Callout.Root>
               <br></br>
             </div>

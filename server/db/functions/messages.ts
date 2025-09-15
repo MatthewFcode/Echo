@@ -24,7 +24,16 @@ export async function getMessagesByChatID(chatId: number) {
 
 export async function getMessagesById(chat_id: number) {
   try {
-    const result = await db('messages').where(chat_id).select('id', 'chat_id as chatId', 'message', 'image', 'user_id as userId', 'time_stamp as timeStamp')
+    const result = await db('messages')
+      .where(chat_id)
+      .select(
+        'id',
+        'chat_id as chatId',
+        'message',
+        'image',
+        'user_id as userId',
+        'time_stamp as timeStamp',
+      )
     return result
   } catch (err) {
     console.log(err)
