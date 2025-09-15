@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.form-inputs {
-  padding: 0.2vw;
-  border: 1px solid black
-}
-
 .app {
 
 }
@@ -15,7 +10,7 @@
   display: flex;
   width: 10vw;
   border-right: 3px solid black;
-  height: 80vh;
+  height: 70vh;
   margin: 1vh;
 }
 
@@ -41,10 +36,6 @@
   border-radius: 3vw;
 }
 
-.message-container {
-
-}
-
 .nav-chats {
   margin-top: 1vh;
 }
@@ -57,4 +48,17 @@
   font-size: 2vw;
   border-bottom: 3px solid black;
   border-top: 3px solid black;
+}
+
+.image-input {
+
+}
+
+
+.message-input {
+  padding-left: 2vw;
+  border: 1px solid black;
+  width: 25vw;
+  height: 5vh;
+  margin-right: 1.5vw
 }

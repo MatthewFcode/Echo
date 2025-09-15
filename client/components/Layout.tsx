@@ -4,7 +4,7 @@ export default function Layout() {
   return (
     <>
       <header>
-        <img src='./public/images/rect4.webp' alt=''/>
+        <img src='/images/rect4.webp' alt='whats-up-logo'/>
       </header>
       <main>
         <Outlet />
