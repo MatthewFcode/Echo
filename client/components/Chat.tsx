@@ -33,10 +33,6 @@ export function Chat() {
     return <div>Error loading data.</div>
   }
 
-
-  // console.log(chatById.data)
-  // console.log(messageByChatId.data)
-
   return (
     <>
       <div

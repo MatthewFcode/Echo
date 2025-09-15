@@ -32,7 +32,6 @@ router.get('/:id', async (req, res) => {
   try {
     const id = req.body
     const result = await db.getChatByChatId(id)
-    console.log(result)
     res.json(result)
   } catch (error) {
     console.log(error)

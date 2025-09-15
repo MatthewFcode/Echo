@@ -4,6 +4,7 @@ import { MessageData } from '../../models/Message'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Button } from '@radix-ui/themes'
 import { useParams } from 'react-router'
+import { useUsers } from '../hooks/useUsers'
 
 const empty = {
   id: '',
@@ -18,15 +19,30 @@ const empty = {
 export default function Message() {
   const { id } = useParams<{ id: string }>()
   const chatIdd = Number(id)
+
   const addMessage = useAddMessage()
 
-  const { getAccessTokenSilently, } = useAuth0()
+  const {
+    data: userData,
+    isPending: isPendingUser,
+    isError: isErrorUser,
+  } = useUsers()
+
+  const { getAccessTokenSilently } = useAuth0()
 
   const [formState, setFormState] = useState(empty)
 
   if (addMessage.isPending) {
     return <p>Loading...</p>
   }
+  if (isPendingUser) {
+    return <p>Loading...</p>
+  }
+  if (isErrorUser) {
+    return <p>There was an error with the user data</p>
+  }
+
+  const currentUser = userData?.id
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -39,7 +55,12 @@ export default function Message() {
 
     newMessage.append('message', String(formState.message))
     newMessage.append('timeStamp', new Date().toISOString())
-    newMessage.append('chatId', String(formState.chatId = chatIdd))
+    newMessage.append('chatId', String((formState.chatId = chatIdd)))
+    newMessage.append(
+      'userId',
+      String((formState.userId = currentUser as number)),
+    )
+
     if (formState.file) newMessage.append('uploaded_file', formState.file)
     else newMessage.append('image', formState.image)
 
@@ -56,7 +77,6 @@ export default function Message() {
 
     setFormState((prev) => ({ ...prev, [name]: value }))
   }
-
 
   return (
     <>
