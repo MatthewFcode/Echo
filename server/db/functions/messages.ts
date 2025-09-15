@@ -18,6 +18,7 @@ export async function getMessagesByChatID(chatId: number) {
       )
     return result
   } catch (err) {
+    console.error(err)
     console.log(err)
   }
 }
@@ -36,6 +37,7 @@ export async function getMessagesById(chat_id: number) {
       )
     return result
   } catch (err) {
+    console.error(err)
     console.log(err)
   }
 }
@@ -52,6 +54,17 @@ export async function sendChat(newChat: {
     const result = await db('messages').insert(newChat).returning('*')
     return result
   } catch (err) {
+    console.error(err)
     console.log(err)
+  }
+}
+
+// Delete message
+export async function deleteMessage(id: number) {
+  try {
+    await db('messages').where({ id }).del()
+  } catch (error) {
+    console.error(error)
+    console.log(error)
   }
 }

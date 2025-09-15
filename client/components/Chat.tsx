@@ -1,15 +1,31 @@
-// import { useState } from 'react'
-import { Callout, Text } from '@radix-ui/themes'
-import { useGetMessageByChatId } from '../hooks/useMessages.ts'
+import { Callout, Text, Button } from '@radix-ui/themes'
+import { useDeleteMutation, useGetMessageByChatId } from '../hooks/useMessages.ts'
+import { useAuth0 } from '@auth0/auth0-react'
 import { useParams } from 'react-router'
 import Message from './Message.tsx'
+// import { useRouter } from 'next/navigation'
 
 export function Chat() {
   const { id } = useParams<{ id: string }>()
   const chatId = Number(id)
   const { chatById, messageByChatId } = useGetMessageByChatId(chatId)
-  // const { chatById, messageByChatId } = useGetMessageByChatId(2)
+  const deleteMessage = useDeleteMutation()
+  const { getAccessTokenSilently } = useAuth0()
 
+  const handleDelete = async (id: number) => {
+    try {
+    const token = await getAccessTokenSilently()
+
+    await deleteMessage.mutateAsync({token, id})
+
+  } catch (error) {
+    console.log(error)
+    }
+  }
+
+  const messageByChatIdData = messageByChatId.data
+  
+  
   if (chatById.isLoading || messageByChatId.isLoading) {
     return <div>Loading...</div>
   }
@@ -18,11 +34,9 @@ export function Chat() {
     return <div>Error loading data.</div>
   }
 
+
   // console.log(chatById.data)
   // console.log(messageByChatId.data)
-
-  // const chatByIdData = chatById.data
-  const messageByChatIdData = messageByChatId.data
 
   return (
     <>
@@ -48,7 +62,8 @@ export function Chat() {
                 >
                   {message.message}
                 </Text>
-                {message.image != undefined ? <img style={{width: '10vw', paddingTop: '1vh'}} alt='message-image' src={message.image}></img> : <p></p>}
+                {message.image && message.image?.length >= 1 ? <img style={{width: '10vw', paddingTop: '1vh'}} alt='message-image' src={message.image}></img> : <p></p>}
+                <Button onClick={() => handleDelete(message.id)}>Delete</Button>
               </Callout.Root>
               <br></br>
             </div>

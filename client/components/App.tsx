@@ -1,9 +1,7 @@
 import { Theme } from '@radix-ui/themes'
-//import Message from './Message'
-import Nav from './Nav'
 import '@radix-ui/themes/styles.css'
-import { Chat } from './Chat'
-import Message from './Message'
+
+
 
 function App() {
   return (

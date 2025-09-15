@@ -1,7 +1,10 @@
 import { MutationFunction, useQuery } from '@tanstack/react-query'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-
-import { addMessage, getMessageByChatId } from '../apis/messages.ts'
+import {
+  addMessage,
+  getMessageByChatId,
+  deleteMessage,
+} from '../apis/messages.ts'
 import { getChatById } from '../apis/chats.ts'
 import { useAuth0 } from '@auth0/auth0-react'
 
@@ -14,16 +17,22 @@ export function useAddMessageMutation<TData = unknown, TVariables = unknown>(
     mutationFn,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['addMessage'] })
+      queryClient.invalidateQueries({ queryKey: ['chatById'] })
+      queryClient.invalidateQueries({ queryKey: ['messageByChatId'] })
     },
   })
   return mutation
+}
+
+export function useDeleteMutation() {
+  return useAddMessageMutation(deleteMessage)
 }
 
 export function useAddMessage() {
   return useAddMessageMutation(addMessage)
 }
 
-export function useGetMessageByChatId( id: number) {
+export function useGetMessageByChatId(id: number) {
   const { user, getAccessTokenSilently } = useAuth0()
 
   const query1 = useQuery({
