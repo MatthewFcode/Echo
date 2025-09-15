@@ -56,7 +56,6 @@ export default function Message() {
 
   return (
     <>
-      <Chat />
       <div className="message-container">
         <form onSubmit={handleSubmit}>
           <div className="p-8 text-center">

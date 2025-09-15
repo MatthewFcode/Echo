@@ -2,7 +2,7 @@ import { MutationFunction, useQuery } from '@tanstack/react-query'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { addMessage, getMessageByChatId } from '../apis/messages.ts'
-import { getChatByChatId } from '../apis/chats.ts'
+import { getChatById } from '../apis/chats.ts'
 import { useAuth0 } from '@auth0/auth0-react'
 
 export function useAddMessageMutation<TData = unknown, TVariables = unknown>(
@@ -23,14 +23,14 @@ export function useAddMessage() {
   return useAddMessageMutation(addMessage)
 }
 
-export function useGetMessageByChatId(chatId: number, id: number) {
+export function useGetMessageByChatId( id: number) {
   const { user, getAccessTokenSilently } = useAuth0()
 
   const query1 = useQuery({
     queryKey: ['chatById'],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
-      return getChatByChatId(token, chatId)
+      return getChatById(token, id)
     },
     enabled: !!user,
   })

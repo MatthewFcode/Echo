@@ -3,6 +3,7 @@ import { useChats } from '../hooks/useChats.ts'
 import { useUsers } from '../hooks/useUsers.ts'
 import { IfAuthenticated, IfNotAuthenticated } from './Authorization.tsx'
 import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from 'react-router'
 
 function Nav() {
   const { logout, loginWithRedirect, user } = useAuth0()
@@ -13,6 +14,7 @@ function Nav() {
   } = useUsers()
   const userId = userData?.id
   const { data, isPending, isError } = useChats(userId as number)
+  const navigate = useNavigate()
 
   if (data !== undefined && isPending) {
     return <p>Loading...</p>
@@ -39,6 +41,12 @@ function Nav() {
       },
     })
   }
+
+  const handleChatClick = (id: number) => {
+    navigate(`/chat/${id}`)
+    console.log('Box clicked!')
+  }
+
   return (
     <>
       <div className="nav-container">
@@ -53,7 +61,11 @@ function Nav() {
               {user && (
                 <Box width="9.5vw" maxWidth="10vw">
                   <Card>
-                    <Flex gap="3" align="center">
+                    <Flex
+                      gap="3"
+                      align="center"
+                      
+                    >
                       <Avatar
                         size="4"
                         src={user?.picture}
@@ -80,7 +92,7 @@ function Nav() {
                   data.map((chat) => {
                     return (
                       <div className="current-chats" key={chat.id}>
-                        {/* Important Tereny to access both users - leave this comment here */}
+                        {/* Important ternery to access both users - leave this comment here */}
                         {chat.u2Id == userId ? (
                           <>
                             <Box width="9.5vw" maxWidth="10vw">
@@ -97,6 +109,7 @@ function Nav() {
                                     <Text as="div" size="2" weight="bold">
                                       {chat.u2UserName}
                                     </Text>
+
                                     <Text as="div" size="2" color="gray">
                                       Chat Id: {chat.id}
                                     </Text>
@@ -107,7 +120,7 @@ function Nav() {
                           </>
                         ) : (
                           <>
-                            <Box width="9.5vw" maxWidth="10vw">
+                            <Box width="9.5vw" maxWidth="10vw" onClick={() => handleChatClick(chat.id)}>
                               <Card size="1">
                                 <Flex gap="3" align="center">
                                   <Avatar

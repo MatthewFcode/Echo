@@ -1,11 +1,13 @@
 // import { useState } from 'react'
 import { Callout, Text } from '@radix-ui/themes'
 import { useGetMessageByChatId } from '../hooks/useMessages.ts'
+import { useParams } from 'react-router'
+import Message from './Message.tsx'
 
 export function Chat() {
-  // const { chatId } = useParams<{ chatId: string }>()
-  // const id = Number(chatId)
-  const { chatById, messageByChatId } = useGetMessageByChatId(1, 1)
+  const { id } = useParams<{ id: string }>()
+  const chatId = Number(id)
+  const { chatById, messageByChatId } = useGetMessageByChatId(chatId)
   // const { chatById, messageByChatId } = useGetMessageByChatId(2)
 
   if (chatById.isLoading || messageByChatId.isLoading) {
@@ -16,14 +18,15 @@ export function Chat() {
     return <div>Error loading data.</div>
   }
 
-  console.log(chatById)
-  console.log(messageByChatId)
+  // console.log(chatById.data)
+  // console.log(messageByChatId.data)
 
   // const chatByIdData = chatById.data
   const messageByChatIdData = messageByChatId.data
 
   return (
     <>
+    <Message />
       <div
         className="chat-container p-8 text-center"
         style={{ maxWidth: '60vw', transform: 'translate(25vw, -75vh)' }}
