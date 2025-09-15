@@ -3,7 +3,6 @@ import { useDeleteMutation, useGetMessageByChatId } from '../hooks/useMessages.t
 import { useAuth0 } from '@auth0/auth0-react'
 import { useParams } from 'react-router'
 import Message from './Message.tsx'
-// import { useRouter } from 'next/navigation'
 
 export function Chat() {
   const { id } = useParams<{ id: string }>()
@@ -40,7 +39,6 @@ export function Chat() {
 
   return (
     <>
-    <Message />
       <div
         className="chat-container p-8 text-center"
         style={{ maxWidth: '60vw', transform: 'translate(25vw, -75vh)' }}
@@ -70,6 +68,7 @@ export function Chat() {
           )
         })}
       </div>
+      <Message />
     </>
   )
 }

@@ -1,3 +1,4 @@
+import { Message } from '../../../models/Message'
 import connection from '../connection'
 
 const db = connection
@@ -35,7 +36,7 @@ export async function getMessagesById(chat_id: number) {
         'user_id as userId',
         'time_stamp as timeStamp',
       )
-    return result
+    return result as Message[]
   } catch (err) {
     console.error(err)
     console.log(err)

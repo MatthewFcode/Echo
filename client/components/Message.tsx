@@ -3,6 +3,7 @@ import { useAddMessage } from '../hooks/useMessages'
 import { MessageData } from '../../models/Message'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Button } from '@radix-ui/themes'
+import { useParams } from 'react-router'
 
 const empty = {
   id: '',
@@ -15,6 +16,8 @@ const empty = {
 } as unknown as MessageData
 
 export default function Message() {
+  const { id } = useParams<{ id: string }>()
+  const chatIdd = Number(id)
   const addMessage = useAddMessage()
 
   const { getAccessTokenSilently, } = useAuth0()
@@ -36,7 +39,7 @@ export default function Message() {
 
     newMessage.append('message', String(formState.message))
     newMessage.append('timeStamp', new Date().toISOString())
-
+    newMessage.append('chatId', String(formState.chatId = chatIdd))
     if (formState.file) newMessage.append('uploaded_file', formState.file)
     else newMessage.append('image', formState.image)
 
