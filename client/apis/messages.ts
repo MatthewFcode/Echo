@@ -29,3 +29,13 @@ export async function getMessageByChatId({token, id}: getMessageByChatIdFunction
   const response = await request.get(`${rootURL}/messages/${id}`).set('Authorization', `Bearer ${token}`)
   return response.body as Message[]
 }
+
+interface deleteMessageFunction {
+  token: string
+  id: number
+}
+
+export async function deleteMessage({token, id}: deleteMessageFunction) {
+  await request.delete(`${rootURL}/messages/${id}`).set('Authorization', `Bearer ${token}`)
+  return
+}

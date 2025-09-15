@@ -1,4 +1,5 @@
 export interface MessageData {
+  id: number
   chatId: number
   message?: string
   image?: string

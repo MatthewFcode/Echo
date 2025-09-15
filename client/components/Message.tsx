@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { useAddMessage } from '../hooks/useMessages'
 import { MessageData } from '../../models/Message'
 import { useAuth0 } from '@auth0/auth0-react'
@@ -17,7 +17,8 @@ const empty = {
 
 export default function Message() {
   const addMessage = useAddMessage()
-  const { getAccessTokenSilently } = useAuth0()
+
+  const { getAccessTokenSilently, } = useAuth0()
 
   const [formState, setFormState] = useState(empty)
 
@@ -53,6 +54,7 @@ export default function Message() {
 
     setFormState((prev) => ({ ...prev, [name]: value }))
   }
+
 
   return (
     <>

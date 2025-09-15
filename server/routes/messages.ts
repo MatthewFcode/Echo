@@ -50,4 +50,16 @@ router.post('/', upload.single('uploaded_file'), async (req, res) => {
     }
     } )
 
+
+// Delete Message
+router.delete('/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    await db.deleteMessage(id)
+    res.sendStatus(204)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 export default router

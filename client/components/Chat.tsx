@@ -1,13 +1,32 @@
 // import { useState } from 'react'
-import { Callout, Text } from '@radix-ui/themes'
-import { useGetMessageByChatId } from '../hooks/useMessages.ts'
+import { Callout, Text, Button } from '@radix-ui/themes'
+import { useDeleteMutation, useGetMessageByChatId } from '../hooks/useMessages.ts'
+import { useAuth0 } from '@auth0/auth0-react'
+// import { useRouter } from 'next/navigation'
 
 export function Chat() {
   // const { chatId } = useParams<{ chatId: string }>()
   // const id = Number(chatId)
-  const { chatById, messageByChatId } = useGetMessageByChatId(1, 1)
-  // const { chatById, messageByChatId } = useGetMessageByChatId(2)
+  // const router = useRouter
+  const { chatById, messageByChatId } = useGetMessageByChatId(2, 2)
+  const deleteMessage = useDeleteMutation()
+  const { getAccessTokenSilently } = useAuth0()
 
+  const handleDelete = async (id: number) => {
+    try {
+    const token = await getAccessTokenSilently()
+
+    await deleteMessage.mutateAsync({token, id})
+
+  } catch (error) {
+    console.log(error)
+    }
+  }
+
+  // const chatByIdData = chatById.data
+  const messageByChatIdData = messageByChatId.data
+  
+  
   if (chatById.isLoading || messageByChatId.isLoading) {
     return <div>Loading...</div>
   }
@@ -15,12 +34,6 @@ export function Chat() {
   if (chatById.isError || messageByChatId.isError) {
     return <div>Error loading data.</div>
   }
-
-  console.log(chatById)
-  console.log(messageByChatId)
-
-  // const chatByIdData = chatById.data
-  const messageByChatIdData = messageByChatId.data
 
   return (
     <>
@@ -45,7 +58,8 @@ export function Chat() {
                 >
                   {message.message}
                 </Text>
-                {message.image != undefined ? <img style={{width: '10vw', paddingTop: '1vh'}} alt='message-image' src={message.image}></img> : <p></p>}
+                {message.image && message.image?.length >= 1 ? <img style={{width: '10vw', paddingTop: '1vh'}} alt='message-image' src={message.image}></img> : <p></p>}
+                <Button onClick={() => handleDelete(message.id)}>Delete</Button>
               </Callout.Root>
               <br></br>
             </div>
