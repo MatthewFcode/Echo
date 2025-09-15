@@ -16,10 +16,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-router.get('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    const { chatId } = req.body
-    const result = await db.getMessagesByChatID(chatId)
+    const chat_id = req.body
+    
+    const result = await db.getMessagesById(chat_id)
     res.json(result)
   } catch (err) {
     console.log(err)

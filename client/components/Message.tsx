@@ -1,8 +1,10 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import useAddMessage from '../hooks/useMessages'
 import { MessageData } from '../../models/Message'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Button } from '@radix-ui/themes'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { getChatByChatId } from '../apis/chats'
 
 const empty = {
   id: '',
@@ -15,9 +17,27 @@ const empty = {
 } as unknown as MessageData
 
 export default function Message() {
+  const queryClient = useQueryClient();
   const addMessage = useAddMessage()
+  const { user, getAccessTokenSilently } = useAuth0()
 
-  const { getAccessTokenSilently } = useAuth0()
+  // useEffect(() => {
+  //   const reloadTimer = setTimeout(() => {
+  //     window.location.reload(true); // 'true' forces a reload from the server, not cache
+  //   }, 1000); // Reloads after 5000 milliseconds (5 seconds)
+
+  //   // Cleanup function to clear the timer if the component unmounts before reload
+  //   return () => clearTimeout(reloadTimer);
+  // }, []); // Empty dependency array ensures this effect runs only once on mount
+
+  const { refetch } = useQuery({
+    queryKey: ['messages'],
+    queryFn: async () => {
+      const token = await getAccessTokenSilently()
+      return getChatByChatId(token, 1)
+    },
+    enabled: !!user,
+  })
 
   const [formState, setFormState] = useState(empty)
 
@@ -39,6 +59,9 @@ export default function Message() {
     e.preventDefault()
     const token = await getAccessTokenSilently()
 
+    if (addMessage.isPending) {
+      return
+    }
     const newMessage = new FormData()
 
     newMessage.append('message', String(formState.message))
@@ -49,6 +72,9 @@ export default function Message() {
 
     addMessage.mutateAsync({ newMessage, token })
     setFormState(empty)
+
+    queryClient.invalidateQueries({ queryKey: messages });
+    refetch()
   }
 
   return (
@@ -71,8 +97,9 @@ export default function Message() {
               value={formState.message}
               onChange={handleChange}
               className="message-input"
+              required
             />
-            <Button className='message-send-button' type="submit" color="gray" variant="outline" highContrast>
+            <Button data-pending={addMessage.isPending} className='message-send-button' type="submit" color="gray" variant="outline" highContrast>
               Send
             </Button>
           </div>

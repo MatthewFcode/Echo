@@ -27,6 +27,17 @@ router.get('/all/:id', async (req, res) => {
   }
 })
 
+// Get chat by chat.id
+router.get('/:id', async (req, res) => {
+  try {
+    const id = req.body
+    const result = await db.getChatByChatId(id)
+    res.json(result)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 router.post('/', async (req, res) => {
   try {
     const { userId, userId2 } = req.body
