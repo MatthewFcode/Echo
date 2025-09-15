@@ -44,7 +44,7 @@ export async function getMessagesById(chat_id: number) {
 }
 
 // sending chat by the chat id and the user id
-export async function sendChat(newChat: {
+export async function sendChat( newChat: {
   chat_id: number
   message: string
   image: string
@@ -52,7 +52,7 @@ export async function sendChat(newChat: {
   time_stamp: string
 }) {
   try {
-    const result = await db('messages').insert(newChat).returning('*')
+    const result = await db('messages').insert(newChat)
     return result
   } catch (err) {
     console.error(err)
