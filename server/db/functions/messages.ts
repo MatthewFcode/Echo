@@ -22,6 +22,24 @@ export async function getMessagesByChatID(chatId: number) {
   }
 }
 
+export async function getMessagesById(chat_id: number) {
+  try {
+    const result = await db('messages')
+      .where(chat_id)
+      .select(
+        'id',
+        'chat_id as chatId',
+        'message',
+        'image',
+        'user_id as userId',
+        'time_stamp as timeStamp',
+      )
+    return result
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 // sending chat by the chat id and the user id
 export async function sendChat(newChat: {
   chat_id: number
@@ -31,7 +49,7 @@ export async function sendChat(newChat: {
   time_stamp: string
 }) {
   try {
-    const result = await db('messages').insert(newChat)
+    const result = await db('messages').insert(newChat).returning('*')
     return result
   } catch (err) {
     console.log(err)

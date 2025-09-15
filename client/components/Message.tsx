@@ -1,8 +1,9 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
-import useAddMessage from '../hooks/useMessages'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { useAddMessage } from '../hooks/useMessages'
 import { MessageData } from '../../models/Message'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Button } from '@radix-ui/themes'
+import { Chat } from './Chat'
 
 const empty = {
   id: '',
@@ -16,13 +17,31 @@ const empty = {
 
 export default function Message() {
   const addMessage = useAddMessage()
-
   const { getAccessTokenSilently } = useAuth0()
 
   const [formState, setFormState] = useState(empty)
 
   if (addMessage.isPending) {
     return <p>Loading...</p>
+  }
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const token = await getAccessTokenSilently()
+
+    if (addMessage.isPending) {
+      return
+    }
+    const newMessage = new FormData()
+
+    newMessage.append('message', String(formState.message))
+    newMessage.append('timeStamp', new Date().toISOString())
+
+    if (formState.file) newMessage.append('uploaded_file', formState.file)
+    else newMessage.append('image', formState.image)
+
+    await addMessage.mutateAsync({ newMessage, token })
+    setFormState(empty)
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -35,24 +54,9 @@ export default function Message() {
     setFormState((prev) => ({ ...prev, [name]: value }))
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const token = await getAccessTokenSilently()
-
-    const newMessage = new FormData()
-
-    newMessage.append('message', String(formState.message))
-    newMessage.append('timeStamp', new Date().toISOString())
-
-    if (formState.file) newMessage.append('uploaded_file', formState.file)
-    else newMessage.append('image', formState.image)
-
-    addMessage.mutateAsync({ newMessage, token })
-    setFormState(empty)
-  }
-
   return (
     <>
+      <Chat />
       <div className="message-container">
         <form onSubmit={handleSubmit}>
           <div className="p-8 text-center">
@@ -71,8 +75,15 @@ export default function Message() {
               value={formState.message}
               onChange={handleChange}
               className="message-input"
+              required
             />
-            <Button className='message-send-button' type="submit" color="gray" variant="outline" highContrast>
+            <Button
+              data-pending={addMessage.isPending}
+              className="message-send-button"
+              color="gray"
+              variant="outline"
+              highContrast
+            >
               Send
             </Button>
           </div>

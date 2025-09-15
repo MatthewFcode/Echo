@@ -79,7 +79,7 @@ function Nav() {
                 {data !== undefined ? (
                   data.map((chat) => {
                     return (
-                      <div className='current-chats' key={chat.id}>
+                      <div className="current-chats" key={chat.id}>
                         {/* Important Tereny to access both users - leave this comment here */}
                         {chat.u2Id == userId ? (
                           <>
@@ -141,14 +141,14 @@ function Nav() {
           </IfAuthenticated>
           <IfNotAuthenticated>
             <Flex gap="3" align="center">
-            <Button onClick={handleSignIn} radius="full" variant="soft">
+              <Button onClick={handleSignIn} radius="full" variant="soft">
                 Sign in
-            </Button>
-            <Box>
-            <Text as="div" size="2" weight="bold">
-              Please Sign in to Access Chats...
-            </Text>
-            </Box>
+              </Button>
+              <Box>
+                <Text as="div" size="2" weight="bold">
+                  Please Sign in to Access Chats...
+                </Text>
+              </Box>
             </Flex>
           </IfNotAuthenticated>
         </nav>
