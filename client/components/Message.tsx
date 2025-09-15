@@ -54,6 +54,7 @@ export default function Message() {
 
   return (
     <>
+      <div className='message-container'>
       <form onSubmit={handleSubmit}>
         <div className="text-center p-8">
         <label htmlFor='message'>Add Message: </label>
@@ -77,6 +78,7 @@ export default function Message() {
         <button type="submit">Send</button>
         </div>
       </form>
+      </div>
     </>
   )
 }
