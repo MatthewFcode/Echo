@@ -16,7 +16,6 @@ export function useAddMessageMutation<TData = unknown, TVariables = unknown>(
       queryClient.invalidateQueries({ queryKey: ['addMessage'] })
     },
   })
-
   return mutation
 }
 

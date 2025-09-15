@@ -32,8 +32,6 @@ export async function sendChat(newChat: {
 }) {
   try {
     const result = await db('messages').insert(newChat)
-    console.log(result)
-    console.log(newChat)
     return result
   } catch (err) {
     console.log(err)
