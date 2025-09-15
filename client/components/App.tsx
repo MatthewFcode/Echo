@@ -6,8 +6,7 @@ function App() {
     <>
       <div className="app">
         <h1 className="text-3xl font-bold">
-          <img src='' alt=''/>
-          Whats UP
+          <h3>Nav</h3>
         </h1>
         <Nav />
         <Message />
