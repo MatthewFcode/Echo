@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import useAddMessage from '../hooks/useMessages'
 import { MessageData } from '../../models/Message'
 import { useAuth0 } from '@auth0/auth0-react'
+import { Button } from '@radix-ui/themes'
 
 const empty = {
   id: '',
@@ -10,7 +11,7 @@ const empty = {
   image: '',
   userId: '',
   timeStamp: '',
-  file: undefined
+  file: undefined,
 } as unknown as MessageData
 
 export default function Message() {
@@ -20,14 +21,12 @@ export default function Message() {
 
   const [formState, setFormState] = useState(empty)
 
-
   if (addMessage.isPending) {
     return <p>Loading...</p>
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files)
-    setFormState({ ...formState, file: e.target.files[0] })
+    if (e.target.files) setFormState({ ...formState, file: e.target.files[0] })
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -48,35 +47,37 @@ export default function Message() {
     if (formState.file) newMessage.append('uploaded_file', formState.file)
     else newMessage.append('image', formState.image)
 
-    addMessage.mutateAsync({newMessage, token})
+    addMessage.mutateAsync({ newMessage, token })
     setFormState(empty)
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <div className="text-center p-8">
-        <label htmlFor='message'>Add Message: </label>
-        <input
-          type='text'
-          name="message"
-          id="message"
-          placeholder='Message...'
-          value={formState.message}
-          onChange={handleChange}
-          className='form-inputs'
-        />
-        <label htmlFor="image">
-        Upload Image here...</label>
-        <input
-          onChange={handleFileChange}
-          type="file"
-          id="image"
-          name="file"
-          />
-        <button type="submit">Send</button>
-        </div>
-      </form>
+      <div className="message-container">
+        <form onSubmit={handleSubmit}>
+          <div className="p-8 text-center">
+            <input
+              className="image-input"
+              onChange={handleFileChange}
+              type="file"
+              id="image"
+              name="file"
+            />
+            <input
+              type="text"
+              name="message"
+              id="message"
+              placeholder="Message..."
+              value={formState.message}
+              onChange={handleChange}
+              className="message-input"
+            />
+            <Button className='message-send-button' type="submit" color="gray" variant="outline" highContrast>
+              Send
+            </Button>
+          </div>
+        </form>
+      </div>
     </>
   )
 }

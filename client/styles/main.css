@@ -2,7 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-.form-inputs {
-  padding: 0.2vw;
-  border: 1px solid black
+.app {
+
+}
+
+.nav-container {
+  display: flex;
+  width: 10vw;
+  border-right: 3px solid black;
+  height: 70vh;
+  margin: 1vh;
+}
+
+.sign-out-button {
+  padding-bottom: 0.5vh;
+  margin-bottom: 0.75vw; 
+  border-bottom: 3px solid black;
+}
+
+.signed-in-info {
+  display: flex;
+  margin-top: 0.75vw;
+
+}
+
+.profile-name {
+  transform: translate(0, 2.75vh);
+}
+
+.profile-photo {
+  width: 3vw;
+  margin: 0.5vw;
+  border-radius: 3vw;
+}
+
+.nav-chats {
+  margin-top: 1vh;
+}
+
+.current-chats {
+  margin-top: 0.75vw
+}
+
+.nav-title {
+  font-size: 2vw;
+  border-bottom: 3px solid black;
+  border-top: 3px solid black;
+}
+
+.image-input {
+
+}
+
+
+.message-input {
+  padding-left: 2vw;
+  border: 1px solid black;
+  width: 25vw;
+  height: 5vh;
+  margin-right: 1.5vw
 }
