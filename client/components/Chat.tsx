@@ -1,5 +1,5 @@
 // import { useState } from 'react'
-import { Callout, Flex, Text } from '@radix-ui/themes'
+import { Callout, Text, Button } from '@radix-ui/themes'
 import { useGetMessageByChatId } from '../hooks/useMessages.ts'
 
 export function Chat() {
@@ -19,21 +19,29 @@ export function Chat() {
   console.log(chatById)
   console.log(messageByChatId)
 
-  const chatByIdData = chatById.data
+  // const chatByIdData = chatById.data
   const messageByChatIdData = messageByChatId.data
 
   return (
     <>
-      <div className='messages'>
+      <div
+        className="chat-container p-8 text-center"
+        style={{ maxWidth: '60vw', transform: 'translate(25vw, -75vh)' }}
+      >
         <h1>Messages</h1>
         {messageByChatIdData?.map((message) => {
           return (
-            <div key={message.timeStamp}>
-              <Callout.Root>
+            <div className="message-wrap" key={message.timeStamp}>
+              <Callout.Root style={{ paddingTop: '1vh', paddingBottom: '3vh' }}>
                 <Text
                   as="div"
-                  size="2"
-                  style={{ padding: 'none', margin: 'none', gap: '1vh' }}
+                  size="3"
+                  style={{
+                    transform: 'translate(0, 2vh)',
+                    height: 'fit-content',
+                    padding: '0.3vw 0.4vw',
+                    justifyContent: 'flex-end'
+                  }}
                 >
                   {message.message}
                 </Text>

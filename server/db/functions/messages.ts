@@ -40,7 +40,7 @@ export async function sendChat(newChat: {
   time_stamp: string
 }) {
   try {
-    const result = await db('messages').insert(newChat)
+    const result = await db('messages').insert(newChat).returning('*')
     return result
   } catch (err) {
     console.log(err)

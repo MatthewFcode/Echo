@@ -1,10 +1,9 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import useAddMessage from '../hooks/useMessages'
+import { useAddMessage } from '../hooks/useMessages'
 import { MessageData } from '../../models/Message'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Button } from '@radix-ui/themes'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { getChatByChatId } from '../apis/chats'
+import { Chat } from './Chat'
 
 const empty = {
   id: '',
@@ -17,42 +16,13 @@ const empty = {
 } as unknown as MessageData
 
 export default function Message() {
-  const queryClient = useQueryClient();
   const addMessage = useAddMessage()
-  const { user, getAccessTokenSilently } = useAuth0()
-
-  // useEffect(() => {
-  //   const reloadTimer = setTimeout(() => {
-  //     window.location.reload(true); // 'true' forces a reload from the server, not cache
-  //   }, 1000); // Reloads after 5000 milliseconds (5 seconds)
-
-  //   // Cleanup function to clear the timer if the component unmounts before reload
-  //   return () => clearTimeout(reloadTimer);
-  // }, []); // Empty dependency array ensures this effect runs only once on mount
-
-  const { refetch } = useQuery({
-    queryKey: ['messages'],
-    queryFn: async () => {
-      const token = await getAccessTokenSilently()
-      return getChatByChatId(token, 1)
-    },
-    enabled: !!user,
-  })
+  const { getAccessTokenSilently } = useAuth0()
 
   const [formState, setFormState] = useState(empty)
 
   if (addMessage.isPending) {
     return <p>Loading...</p>
-  }
-
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files) setFormState({ ...formState, file: e.target.files[0] })
-  }
-
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.currentTarget
-
-    setFormState((prev) => ({ ...prev, [name]: value }))
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -70,15 +40,23 @@ export default function Message() {
     if (formState.file) newMessage.append('uploaded_file', formState.file)
     else newMessage.append('image', formState.image)
 
-    addMessage.mutateAsync({ newMessage, token })
+    await addMessage.mutateAsync({ newMessage, token })
     setFormState(empty)
+  }
 
-    queryClient.invalidateQueries({ queryKey: messages });
-    refetch()
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) setFormState({ ...formState, file: e.target.files[0] })
+  }
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.currentTarget
+
+    setFormState((prev) => ({ ...prev, [name]: value }))
   }
 
   return (
     <>
+      <Chat />
       <div className="message-container">
         <form onSubmit={handleSubmit}>
           <div className="p-8 text-center">
@@ -99,7 +77,13 @@ export default function Message() {
               className="message-input"
               required
             />
-            <Button data-pending={addMessage.isPending} className='message-send-button' type="submit" color="gray" variant="outline" highContrast>
+            <Button
+              data-pending={addMessage.isPending}
+              className="message-send-button"
+              color="gray"
+              variant="outline"
+              highContrast
+            >
               Send
             </Button>
           </div>

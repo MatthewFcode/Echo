@@ -19,7 +19,7 @@ export function useAddMessageMutation<TData = unknown, TVariables = unknown>(
   return mutation
 }
 
-export default function useAddMessage() {
+export function useAddMessage() {
   return useAddMessageMutation(addMessage)
 }
 
