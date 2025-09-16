@@ -2,6 +2,8 @@ import { Router } from 'express'
 import multer from 'multer'
 import path from 'path'
 import * as db from '../db/functions/messages.ts'
+import { wss } from '../server.ts'
+import ws from 'ws'
 
 const router = Router()
 
@@ -43,6 +45,14 @@ router.post('/', upload.single('uploaded_file'), async (req, res) => {
         image: profilePhoto,
       }
       const result = await db.sendChat(convert)
+
+      // This will broadcast the changes to the server to other clients connected to the websocket
+      wss.clients.forEach(client => {
+      if (client.readyState === ws.OPEN) {
+        client.send(JSON.stringify({ type: 'database_change', message: 'New message added' }));
+      }
+    })
+
       res.json({ newMessage: result })
     } catch(err) {
       res.sendStatus(400).json('something went wrong with the image url')

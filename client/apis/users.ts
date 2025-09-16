@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { User, UserData } from '../../models/User'
+import { User } from '../../models/User'
 
 const rootURL = new URL(`/api/v1`, document.baseURI)
 
@@ -8,9 +8,7 @@ interface GetUserFunction {
 }
 
 // GET /api/v1/users (gets all users)
-export async function getMe({
-  token,
-}: GetUserFunction): Promise<User | null> {
+export async function getMe({ token }: GetUserFunction): Promise<User | null> {
   return await request
     .get(`${rootURL}/users/me`)
     .set('Authorization', `Bearer ${token}`)
@@ -26,19 +24,27 @@ export async function getUserById(token: string, id: number) {
   return response.body.user[0] as User
 }
 
-interface AddUserFunction {
-  newUser: UserData
+export async function addUser({
+  formData,
+  token,
+}: {
+  formData: FormData
+  token: string
+}): Promise<User> {
+  const result = await request
+    .post(`${rootURL}/users`)
+    .set('Authorization', `Bearer ${token}`)
+    .send(formData)
+  return result.body
+}
+
+interface GetAllUsersFunction {
   token: string
 }
 
-// POST /api/v1/users (add a new user)
-export async function addUser({
-  newUser,
-  token,
-}: AddUserFunction): Promise<User> {
+export async function getAllUsers({ token }: GetAllUsersFunction) {
   return await request
-    .post(`${rootURL}/users`)
+    .get(`${rootURL}/users`)
     .set('Authorization', `Bearer ${token}`)
-    .send(newUser)
     .then((res) => res.body)
 }

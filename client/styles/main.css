@@ -11,7 +11,7 @@ html {
 }
 
 .nav-container {
-  @apply m-3 flex h-[75vh] w-[12vw] flex-col rounded-2xl border-r-4 border-gray-300 
+  @apply m-3 flex h-[70vh] w-[12vw] flex-col rounded-2xl border-r-4 border-gray-300 
          bg-white p-4 shadow-md;
 }
 
@@ -45,21 +45,18 @@ html {
          uppercase tracking-wide text-gray-700;
 }
 
-.image-input {
-}
-
 .message-input {
   @apply mr-4 h-[6vh] w-[28vw] rounded-lg border border-gray-300 pl-4 
          shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400;
 }
 
 .message-container {
-  @apply -translate-y-[60vh] translate-x-[5vw];
+  transform: translate(3vw, -60vh);
 }
 
 .chat-container {
-  @apply flex h-[65vh] flex-col justify-end space-y-3 overflow-y-scroll rounded-2xl
-         bg-white p-4 shadow-inner;
+  @apply -ml-12 flex h-[60vh] flex-col justify-end space-y-3 
+         overflow-y-scroll rounded-2xl bg-blue-50 p-6 shadow-inner;
 }
 
 .message-user-info {
@@ -67,14 +64,12 @@ html {
 }
 
 .message-text-content {
-  @apply w-fit max-w-[60%] translate-y-[2vh] rounded-xl px-4 py-2 
-         leading-snug shadow-sm;
+  transform: translate(0, 2vh);
+  height: fit-content;
+  padding: 0.3vw 0.4vw;
+  justify-content: flex-end;
 }
 
-.message-text-content.incoming {
-  @apply self-start bg-gray-200 text-gray-800;
-}
-
-.message-text-content.outgoing {
-  @apply self-end bg-blue-500 text-white;
+.message-image {
+  @apply rounded-lg border-gray-500 shadow-sm transition-colors hover:border-gray-700;
 }

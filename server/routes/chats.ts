@@ -41,7 +41,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const { userId, userId2 } = req.body
-    const result = await db.createChat(userId, userId2)
+    const result = await db.createChat({ userId, userId2 })
     res.json(result)
   } catch (err) {
     console.log(err)

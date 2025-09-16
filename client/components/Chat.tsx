@@ -7,6 +7,26 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { useParams } from 'react-router'
 import Message from './Message.tsx'
 
+const ws = new WebSocket('ws://localhost:3000')
+
+ws.onopen = () => {
+};
+
+ws.onmessage = event => {
+  const data = JSON.parse(event.data);
+  if (data.type === 'database_change') {
+    window.location.reload() 
+  }
+}
+
+ws.onclose = () => {
+  
+}
+
+ws.onerror = error => {
+  console.error('WebSocket error:', error)
+}
+
 export function Chat() {
   const { id } = useParams<{ id: string }>()
   const chatId = Number(id)
@@ -66,6 +86,7 @@ export function Chat() {
                 </Text>
                 {message.image && message.image?.length >= 1 ? (
                   <img
+                    className='message-image'
                     style={{ width: '10vw', paddingTop: '1vh' }}
                     alt="message-image"
                     src={message.image}

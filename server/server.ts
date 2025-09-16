@@ -5,22 +5,41 @@ import userRoutes from './routes/users.ts'
 import chatsRoutes from './routes/chats.ts'
 import messagesRoutes from './routes/messages.ts'
 
-const server = express()
+import { createServer } from 'http'
+import { WebSocketServer } from 'ws'
 
-server.use(express.json())
+const app = express()
 
-server.use('/api/v1/users', userRoutes)
-server.use('/api/v1/chats', chatsRoutes)
-server.use('/api/v1/messages', messagesRoutes)
-//serving user images
-server.use('/images', express.static(path.resolve('public/images')))
+// shared HTTP server and WebSocket server
+const server = createServer(app)
+const wss = new WebSocketServer({ server })
+
+app.use(express.json())
+
+app.use('/api/v1/users', userRoutes)
+app.use('/api/v1/chats', chatsRoutes)
+app.use('/api/v1/messages', messagesRoutes)
+app.use('/images', express.static(path.resolve('public/images')))
 
 if (process.env.NODE_ENV === 'production') {
-  server.use(express.static(Path.resolve('public')))
-  server.use('/assets', express.static(Path.resolve('./dist/assets')))
-  server.get('*', (req, res) => {
+  app.use(express.static(Path.resolve('public')))
+  app.use('/assets', express.static(Path.resolve('./dist/assets')))
+  app.get('*', (req, res) => {
     res.sendFile(Path.resolve('./dist/index.html'))
   })
 }
 
-export default server
+// WebSocket server setup
+wss.on('connection', ws => {
+  console.log('Client connected')
+
+  ws.on('message', message => {
+    console.log(`Received message: ${message}`)
+  });
+
+  ws.on('close', () => {
+    console.log('Client disconnected')
+  })
+})
+
+export { server, wss }

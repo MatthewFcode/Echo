@@ -6,12 +6,12 @@ export default function Layout() {
   return (
     <>
       <header>
-        <img src='/images/rect4.webp' alt='whats-up-logo'/>
+        <img src="/images/rect4.webp" alt="whats-up-logo" />
       </header>
       <main>
         <Theme>
-        <Nav />
-        <Outlet />
+          <Nav />
+          <Outlet />
         </Theme>
       </main>
       <footer></footer>

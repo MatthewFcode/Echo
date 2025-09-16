@@ -6,9 +6,12 @@ import { Chat } from './components/Chat.tsx'
 // export default createRoutesFromElements(<Route index element={<App />} />)
 
 export default createRoutesFromElements(
-  <Route path="/" element={<Layout />}>
-    <Route index element={<App />} />
-    <Route path="register" element={<Registration />} />
-    <Route path="chat/:id" element={<Chat />} />
-  </Route>,
+  <>
+    <Route path="/" element={<Layout />}>
+      <Route index element={<App />} />
+      <Route path="chat/:id" element={<Chat />} />
+    </Route>
+    ,
+    <Route path="register" element={<Registration />} />,
+  </>,
 )
