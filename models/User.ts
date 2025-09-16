@@ -1,11 +1,9 @@
 export interface UserData {
-  userName: string
+  user_name: string
   auth0Id: string
-  profilePic?: string
+  profile_pic?: string
 }
 
 export interface User extends UserData {
   id: number
 }
-
-

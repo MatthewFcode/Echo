@@ -1,5 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
-import { getChats, getChatById } from '../apis/chats'
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  MutationFunction,
+} from '@tanstack/react-query'
+import { getChats, getChatById, createChat } from '../apis/chats'
 import { useAuth0 } from '@auth0/auth0-react'
 
 export function useChats(userId: number) {
@@ -14,7 +19,6 @@ export function useChats(userId: number) {
     refetchOnWindowFocus: true,
     refetchOnMount: true,
   })
-  
 }
 
 export function useChatById(id: number) {
@@ -33,4 +37,23 @@ export function useChatById(id: number) {
   return {
     ...query,
   }
+}
+
+export function useSomethingMutation<TData = unknown, TVariables = unknown>(
+  mutationFn: MutationFunction<TData, TVariables>,
+) {
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['chatsById'] })
+      queryClient.invalidateQueries({ queryKey: ['chats'] })
+    },
+  })
+  return mutation
+}
+
+export function useCreateChat() {
+  return useSomethingMutation(createChat)
 }

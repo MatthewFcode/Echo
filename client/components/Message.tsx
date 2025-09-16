@@ -3,9 +3,8 @@ import { useAddMessage } from '../hooks/useMessages'
 import { MessageData } from '../../models/Message'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Button } from '@radix-ui/themes'
-import { Navigate, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import { useUsers } from '../hooks/useUsers'
-import { useNavigate } from 'react-router'
 
 const empty = {
   id: '',
