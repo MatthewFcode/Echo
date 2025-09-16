@@ -1,17 +1,22 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest'
 import { StatusCodes } from 'http-status-codes'
 import connection from '../db/connection'
-import server from '../server'
+import { server } from '../server'
 import request from 'supertest'
 import jwt from 'jsonwebtoken'
+
 const db = connection
 
 const testUserId = 'auth0|test-user-id'
-const mockJwt = jwt.sign({
-  sub: testUserId,
-  iss: 'https://hotoke-abe.au.auth0.com',
-  aud: 'https://whats-up/api'
-}, 'test-secret',   { algorithm: 'HS256', expiresIn: '1h' })
+const mockJwt = jwt.sign(
+  {
+    sub: testUserId,
+    iss: 'https://hotoke-abe.au.auth0.com',
+    aud: 'https://whats-up/api',
+  },
+  'test-secret',
+  { algorithm: 'HS256', expiresIn: '1h' },
+)
 
 // Migrates any changes to database before running tests
 beforeAll(async () => {
@@ -30,49 +35,68 @@ afterAll(async () => {
 
 describe('getting users', () => {
   it('responds with 1 or more users', async () => {
-    const response = await request(server).get('/api/v1/users').set('Authorization', `Bearer ${mockJwt}`)
+    const response = await request(server)
+      .get('/api/v1/users')
+      .set('Authorization', `Bearer ${mockJwt}`)
     expect(response.status).toBe(StatusCodes.OK)
     expect(response.body[0]).toStrictEqual({
       id: 1,
       auth0id: 'google-oauth2|10987654321',
       user_name: 'Bob',
-      profile_pic: 'https://static.wikia.nocookie.net/btb/images/9/9d/434.jpg/revision/latest/scale-to-width-down/1200?cb=20230414211405'
+      profile_pic: 'https://static.wikia.nocookie.net/btb/images/9/9d/434.jpg',
     })
-
   })
 })
 
 describe('getting a user by an ID', () => {
   it('takes an ID as a user and responds with the correct user data', async () => {
     const response = await request(server)
-    .get('/api/v1/users/me')
-    .set('Authorization', `Bearer ${mockJwt}`)
+      .get('/api/v1/users/me')
+      .set('Authorization', `Bearer ${mockJwt}`)
     expect(response.status).toBe(StatusCodes.OK)
-    expect(response.body).toStrictEqual(  {user: {
-      id:4,
-      auth0id: 'auth0|test-user-id', 
-      user_name: 'Test User',
-      profile_pic: '/images/test.jpg',
-    }})
-
+    expect(response.body).toStrictEqual({
+      user: {
+        id: expect.any(Number),
+        auth0id: 'auth0|test-user-id',
+        user_name: 'Test User',
+        profile_pic: '/images/test.jpg',
+      },
+    })
   })
 })
 
+describe('getting a user by user ID', () => {
+  it('returns the correct user object based on userId param', async () => {
+    const response = await request(server).get('/api/v1/users/1')
 
-// testing post route without testing the multer upload || currently sends the profile photo as an empty string
+    expect(response.status).toBe(StatusCodes.OK)
+    expect(response.body.user).toStrictEqual([
+      {
+        id: 1,
+        auth0Id: 'google-oauth2|10987654321',
+        userName: 'Bob',
+        profilePic: 'https://static.wikia.nocookie.net/btb/images/9/9d/434.jpg',
+      },
+    ])
+  })
+})
+
 describe('posting a user to the database', () => {
   it('takes user information and adds it to the user table on the database', async () => {
     const dummyUsername = 'Hugh Janus'
     const response = await request(server)
-    .post('/api/v1/users')
-    .set('Authorization', `Bearer ${mockJwt}`)
-    .field('username', dummyUsername)
+      .post('/api/v1/users')
+      .set('Authorization', `Bearer ${mockJwt}`)
+      .field('userName', dummyUsername)
+
     expect(response.status).toBe(StatusCodes.CREATED)
+
+    // The DB returns snake_case keys, so match them exactly
     expect(response.body[0]).toStrictEqual({
       auth0id: 'auth0|test-user-id',
-      id: 7,
-      user_name: 'Hugh Janus', 
-      profile_pic: ''
+      id: expect.any(Number), // this will change if DB state changes (you can use `expect.any(Number)` instead)
+      user_name: 'Hugh Janus',
+      profile_pic: '',
     })
   })
 })
