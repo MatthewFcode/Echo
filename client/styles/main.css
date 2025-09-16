@@ -7,7 +7,6 @@ html {
   overflow-x: hidden;
 }
 .app {
-
 }
 
 .nav-container {
@@ -20,14 +19,13 @@ html {
 
 .sign-out-button {
   padding-bottom: 0.5vh;
-  margin-bottom: 0.75vw; 
+  margin-bottom: 0.75vw;
   border-bottom: 3px solid black;
 }
 
 .signed-in-info {
   display: flex;
   margin-top: 0.75vw;
-
 }
 
 .profile-name {
@@ -45,7 +43,7 @@ html {
 }
 
 .current-chats {
-  margin-top: 0.75vw
+  margin-top: 0.75vw;
 }
 
 .nav-title {
@@ -55,16 +53,14 @@ html {
 }
 
 .image-input {
-
 }
-
 
 .message-input {
   padding-left: 2vw;
   border: 1px solid black;
   width: 25vw;
   height: 5vh;
-  margin-right: 1.5vw
+  margin-right: 1.5vw;
 }
 
 .message-container {
@@ -73,12 +69,23 @@ html {
 
 .chat-container {
   display: flex;
-    flex-direction: column; 
-    justify-content: flex-end;
-    height: 55vh;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 60vh;
+  overflow-y: scroll;
 }
 
-
-.message-wrap {
-
+.message-user-info {
+  position: absolute;
+  transform: translate(-27.75vw);
+  font-size: 0.5vw;
+  font-family: serif;
 }
+
+.message-text-content {
+  transform: translate(0, 2vh);
+  height: fit-content;
+  padding: 0.3vw 0.4vw;
+  justify-content: flex-end;
+}
+

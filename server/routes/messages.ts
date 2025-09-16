@@ -43,7 +43,6 @@ router.post('/', upload.single('uploaded_file'), async (req, res) => {
         image: profilePhoto,
       }
       const result = await db.sendChat(convert)
-      console.log(result)
       res.json({ newMessage: result })
     } catch(err) {
       res.sendStatus(400).json('something went wrong with the image url')
