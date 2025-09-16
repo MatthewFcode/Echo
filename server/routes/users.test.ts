@@ -1,13 +1,10 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest'
 import { StatusCodes } from 'http-status-codes'
 import connection from '../db/connection'
-import server from '../server'
+import { server } from '../server'
 import request from 'supertest'
 import jwt from 'jsonwebtoken'
-<<<<<<< HEAD
 
-=======
->>>>>>> dev
 const db = connection
 
 const testUserId = 'auth0|test-user-id'
@@ -65,6 +62,7 @@ describe('getting a user by an ID', () => {
         profile_pic: '/images/test.jpg',
       },
     })
+    console.log('JWT ENV:', process.env.NODE_ENV)
   })
 })
 

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest'
 import { StatusCodes } from 'http-status-codes'
 import connection from '../db/connection'
-import server from '../server'
+import { server } from '../server'
 import request from 'supertest'
 
 const db = connection
