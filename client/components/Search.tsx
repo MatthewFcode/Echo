@@ -60,7 +60,6 @@ function Search() {
     }
   }
 
-  console.log(filteredUsers)
 
   return (
     <div>
