@@ -5,13 +5,13 @@ import userRoutes from './routes/users.ts'
 import chatsRoutes from './routes/chats.ts'
 import messagesRoutes from './routes/messages.ts'
 
-import { createServer } from 'http';
-import { WebSocketServer } from 'ws';
+import { createServer } from 'http'
+import { WebSocketServer } from 'ws'
 
 const app = express()
 
 // shared HTTP server and WebSocket server
-const server = createServer(app);
+const server = createServer(app)
 const wss = new WebSocketServer({ server })
 
 app.use(express.json())
@@ -31,15 +31,15 @@ if (process.env.NODE_ENV === 'production') {
 
 // WebSocket server setup
 wss.on('connection', ws => {
-  console.log('Client connected');
+  console.log('Client connected')
 
   ws.on('message', message => {
-    console.log(`Received message: ${message}`);
+    console.log(`Received message: ${message}`)
   });
 
   ws.on('close', () => {
-    console.log('Client disconnected');
-  });
-});
+    console.log('Client disconnected')
+  })
+})
 
 export { server, wss }
