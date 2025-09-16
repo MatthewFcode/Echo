@@ -51,7 +51,7 @@ function Search() {
           userId: currentUserId,
           userId2,
         })
-        const chatId = response?.chatId
+        const chatId = response[0]
         navigate(`/chat/${chatId}`)
         setSearch('')
       }

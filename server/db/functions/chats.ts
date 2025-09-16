@@ -31,7 +31,7 @@ export async function getChat(userId: number, userId2: number) {
 
 export async function getChatByChatId(id: number) {
   try {
-    const result = await db('chats').where(id).returning('*')
+    const result = await db('chats').where('id', id).returning('*')
     return result
   } catch (error) {
     console.log(error)
