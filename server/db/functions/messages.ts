@@ -5,7 +5,7 @@ const db = connection
 
 // getting the messgaes by the chat id and the user id
 
-export async function getMessagesByChatID(chatId: number) {
+export async function getMessagesByChatId(chatId: number) {
   try {
     const result = await db('messages')
       .join('users', 'messages.user_id', 'users.id')
@@ -27,15 +27,19 @@ export async function getMessagesByChatID(chatId: number) {
 export async function getMessagesById(chat_id: number) {
   try {
     const result = await db('messages')
-      .where(chat_id)
+      .join('users', 'messages.user_id', 'users.id')
+      .where('messages.chat_id', chat_id)
       .select(
-        'id',
+        'messages.id as id',
         'chat_id as chatId',
         'message',
         'image',
         'user_id as userId',
         'time_stamp as timeStamp',
+        'users.user_name as usersUserName',
+        'users.profile_pic as userProfilePic'
       )
+    console.log(chat_id)
     return result as Message[]
   } catch (err) {
     console.error(err)
@@ -44,7 +48,7 @@ export async function getMessagesById(chat_id: number) {
 }
 
 // sending chat by the chat id and the user id
-export async function sendChat( newChat: {
+export async function sendChat(newChat: {
   chat_id: number
   message: string
   image: string
