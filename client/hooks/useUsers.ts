@@ -51,6 +51,4 @@ export function useUserById(id: number) {
     enabled: !!user && !!id
   })
   
-
-  
 }

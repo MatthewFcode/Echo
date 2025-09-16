@@ -1,4 +1,6 @@
 export interface MessageData {
+  usersUserName: string | undefined
+  userProfilePic: string | undefined
   id: number
   chatId: number
   message?: string

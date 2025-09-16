@@ -30,7 +30,7 @@ router.get('/all/:id', async (req, res) => {
 // Get chat by chat.id
 router.get('/:id', async (req, res) => {
   try {
-    const id = req.body
+    const id = Number(req.params.id)
     const result = await db.getChatByChatId(id)
     res.json(result)
   } catch (error) {
