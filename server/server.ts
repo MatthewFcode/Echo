@@ -10,7 +10,7 @@ import { WebSocketServer } from 'ws';
 
 const app = express()
 
-// Create the shared HTTP server and WebSocket server
+// shared HTTP server and WebSocket server
 const server = createServer(app);
 const wss = new WebSocketServer({ server })
 
@@ -42,5 +42,4 @@ wss.on('connection', ws => {
   });
 });
 
-// IMPORTANT: Export the shared server and WebSocket server
 export { server, wss }
