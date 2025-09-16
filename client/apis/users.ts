@@ -8,9 +8,7 @@ interface GetUserFunction {
 }
 
 // GET /api/v1/users (gets all users)
-export async function getMe({
-  token,
-}: GetUserFunction): Promise<User | null> {
+export async function getMe({ token }: GetUserFunction): Promise<User | null> {
   return await request
     .get(`${rootURL}/users/me`)
     .set('Authorization', `Bearer ${token}`)
@@ -40,5 +38,18 @@ export async function addUser({
     .post(`${rootURL}/users`)
     .set('Authorization', `Bearer ${token}`)
     .send(newUser)
+    .then((res) => res.body)
+}
+
+// Get route for getting all Users
+
+interface GetAllUsersFunction {
+  token: string
+}
+
+export async function getAllUsers({ token }: GetAllUsersFunction) {
+  return await request
+    .get(`${rootURL}/users`)
+    .set('Authorization', `Bearer ${token}`)
     .then((res) => res.body)
 }
