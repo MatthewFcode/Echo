@@ -7,6 +7,29 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { useParams } from 'react-router'
 import Message from './Message.tsx'
 
+const ws = new WebSocket('ws://localhost:3000');
+
+ws.onopen = () => {
+  console.log('Connected to WebSocket server');
+};
+
+ws.onmessage = event => {
+  const data = JSON.parse(event.data);
+  if (data.type === 'database_change') {
+    console.log('Database changed, refreshing page...');
+    // Or for a full page refresh:
+    window.location.reload(); 
+  }
+};
+
+ws.onclose = () => {
+  console.log('Disconnected from WebSocket server');
+};
+
+ws.onerror = error => {
+  console.error('WebSocket error:', error);
+};
+
 export function Chat() {
   const { id } = useParams<{ id: string }>()
   const chatId = Number(id)
@@ -38,7 +61,11 @@ export function Chat() {
     <>
       <div
         className="chat-container p-8 text-center"
-        style={{ maxWidth: '60vw', transform: 'translate(25vw, -75vh)' }}
+        style={{
+          maxWidth: '60vw',
+          transform: 'translate(25vw, -75vh)',
+          overflowY: 'visible',
+        }}
       >
         <h1>Messages</h1>
         {messageByChatIdData?.map((message) => {
@@ -47,23 +74,17 @@ export function Chat() {
               <Avatar
                 style={{
                   position: 'absolute',
-                  transform: 'translate(-31.5vw, 9vh)',
+                  transform: 'translate(-31.5vw, 2.4vh)',
+                  borderRadius: '1vw',
                 }}
                 src={message.userProfilePic}
                 fallback="T"
               ></Avatar>
-              <Text>{message.usersUserName}</Text>
+              <Text className="message-user-info">
+                {message.usersUserName} - {message.timeStamp}
+              </Text>
               <Callout.Root style={{ paddingTop: '1vh', paddingBottom: '3vh' }}>
-                <Text
-                  as="div"
-                  size="3"
-                  style={{
-                    transform: 'translate(0, 2vh)',
-                    height: 'fit-content',
-                    padding: '0.3vw 0.4vw',
-                    justifyContent: 'flex-end',
-                  }}
-                >
+                <Text as="div" size="3" className="message-text-content">
                   {message.message}
                 </Text>
                 {message.image && message.image?.length >= 1 ? (
@@ -75,7 +96,17 @@ export function Chat() {
                 ) : (
                   <p></p>
                 )}
-                <Button onClick={() => handleDelete(message.id)}>Delete</Button>
+                <Button
+                  className="message-delete-button"
+                  style={{
+                    position: 'absolute',
+                    transform: 'translate(50vw, 1.75vh)',
+                    margin: '0px',
+                  }}
+                  onClick={() => handleDelete(message.id)}
+                >
+                  Delete
+                </Button>
               </Callout.Root>
               <br></br>
             </div>
