@@ -39,7 +39,6 @@ export async function getMessagesById(chat_id: number) {
         'users.user_name as usersUserName',
         'users.profile_pic as userProfilePic'
       )
-    console.log(chat_id)
     return result as Message[]
   } catch (err) {
     console.error(err)
