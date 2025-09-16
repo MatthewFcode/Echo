@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { User, UserData } from '../../models/User'
+import { User } from '../../models/User'
 
 const rootURL = new URL(`/api/v1`, document.baseURI)
 
@@ -24,24 +24,19 @@ export async function getUserById(token: string, id: number) {
   return response.body.user[0] as User
 }
 
-interface AddUserFunction {
-  newUser: UserData
-  token: string
-}
-
-// POST /api/v1/users (add a new user)
 export async function addUser({
-  newUser,
+  formData,
   token,
-}: AddUserFunction): Promise<User> {
-  return await request
+}: {
+  formData: FormData
+  token: string
+}): Promise<User> {
+  const result = await request
     .post(`${rootURL}/users`)
     .set('Authorization', `Bearer ${token}`)
-    .send(newUser)
-    .then((res) => res.body)
+    .send(formData)
+  return result.body
 }
-
-// Get route for getting all Users
 
 interface GetAllUsersFunction {
   token: string

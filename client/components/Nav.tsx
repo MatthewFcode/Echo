@@ -65,13 +65,13 @@ function Nav() {
                     <Flex gap="3" align="center">
                       <Avatar
                         size="4"
-                        src={user?.picture}
+                        src={userData?.profile_pic || user?.picture}
                         radius="full"
-                        fallback="T"
+                        fallback={userData?.user_name?.[0] || 'U'}
                       />
                       <Box>
                         <Text as="div" size="2" weight="bold">
-                          {user?.name}
+                          {userData?.user_name || user?.name}
                         </Text>
                         <Text as="div" size="2" color="gray">
                           {user?.nickname}

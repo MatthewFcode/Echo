@@ -53,6 +53,7 @@ function Search() {
         })
         const chatId = response?.chatId
         navigate(`/chat/${chatId}`)
+        setSearch('')
       }
     } catch (err) {
       console.log('Error creating the chat', err)
@@ -66,18 +67,25 @@ function Search() {
       <input
         type="text"
         placeholder="Search Users..."
+        aria-label="Search users"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <ul>
-        {filteredUsers?.map((u) => (
-          <li key={u.id}>
-            {u.user_name}
-            <button onClick={() => handleStartChat(u.id)}>Create Chat </button>
-          </li>
-        ))}
-      </ul>
+      {search !== '' && (
+        <ul>
+          {filteredUsers.map((u) => (
+            <li key={u.id}>
+              <button
+                onClick={() => handleStartChat(u.id)}
+                aria-label={`Chat with ${u.user_name}`}
+              >
+                Chat with {u.user_name}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

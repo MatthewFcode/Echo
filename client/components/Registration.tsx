@@ -30,24 +30,37 @@ function Register() {
   const navigate = useNavigate()
   const [form, setForm] = useState({
     userName: '',
+    file: null as File | null,
   })
 
   useEffect(() => {
-    console.log(user)
     if (user.data) navigate('/')
   }, [user.data, navigate])
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    evt.preventDefault()
     setForm({
       ...form,
       [evt.target.name]: evt.target.value,
     })
   }
 
+  function handleFileChange(evt: React.ChangeEvent<HTMLInputElement>) {
+    if (evt.target.files && evt.target.files[0]) {
+      setForm({ ...form, file: evt.target.files[0] })
+    }
+  }
+
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     const token = await getAccessTokenSilently()
     evt.preventDefault()
-    user.add.mutate({ newUser: form, token }, mutationOptions)
+
+    const formData = new FormData()
+    formData.append('userName', form.userName)
+    if (form.file) {
+      formData.append('profile_pic', form.file)
+    }
+    user.add.mutate({ formData, token }, mutationOptions)
     navigate('/')
   }
 
@@ -59,7 +72,7 @@ function Register() {
     <div>
       <div>
         <IfAuthenticated>
-          <h1>Enter you details please...</h1>
+          <h1>Choose a username and profile picture for Whats Up!!</h1>
           {errorMsg && (
             <div>
               Error: {errorMsg}
@@ -68,9 +81,9 @@ function Register() {
           )}
           <form onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="userName">User: </label>
+              <label htmlFor="userName">Username: </label>
               <input
-              style={{border: '1px solid black', margin: '0.2vw'}}
+                style={{ border: '1px solid black', margin: '0.2vw' }}
                 type="text"
                 id="userName"
                 name="userName"
@@ -79,7 +92,23 @@ function Register() {
               />
             </div>
             <div>
-              <button style={{border: '1px solid black', margin: '0.2vw'}} disabled={!form.userName}>Register</button>
+              <label htmlFor="profile-piccture">Profile Picture:</label>
+              <input
+                style={{ border: '1px solid black', margin: '0.2vw' }}
+                type="file"
+                id="profile_pic"
+                name="profile_pic"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+            </div>
+            <div>
+              <button
+                style={{ border: '1px solid black', margin: '0.2vw' }}
+                disabled={!form.userName}
+              >
+                Register
+              </button>
             </div>
           </form>
         </IfAuthenticated>
