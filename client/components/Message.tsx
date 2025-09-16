@@ -52,7 +52,6 @@ export default function Message() {
       return
     }
     const newMessage = new FormData()
-
     newMessage.append('message', String(formState.message))
     newMessage.append('timeStamp', new Date().toISOString())
     newMessage.append('chatId', String((formState.chatId = chatIdd)))
