@@ -36,7 +36,7 @@ export function useGetMessageByChatId(id: number) {
   const { user, getAccessTokenSilently } = useAuth0()
 
   const query1 = useQuery({
-    queryKey: ['chatById'],
+    queryKey: ['chatById', id],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
       return getChatById(token, id)
@@ -45,7 +45,7 @@ export function useGetMessageByChatId(id: number) {
   })
 
   const query2 = useQuery({
-    queryKey: ['messageByChatId'],
+    queryKey: ['messageByChatId', id],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
       return getMessageByChatId({ token, id })

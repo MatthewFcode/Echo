@@ -18,7 +18,7 @@ const upload = multer({ storage: storage })
 
 router.get('/:id', async (req, res) => {
   try {
-    const chat_id = req.body
+    const chat_id = Number(req.params.id)
     
     const result = await db.getMessagesById(chat_id)
     res.json(result)

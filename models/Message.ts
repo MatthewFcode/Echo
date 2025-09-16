@@ -1,4 +1,6 @@
 export interface MessageData {
+  usersUserName: string
+  userProfilePic: string 
   id: number
   chatId: number
   message?: string
