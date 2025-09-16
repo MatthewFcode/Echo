@@ -4,6 +4,7 @@ import { useUsers } from '../hooks/useUsers.ts'
 import { IfAuthenticated, IfNotAuthenticated } from './Authorization.tsx'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router'
+import Search from './Search.tsx'
 
 function Nav() {
   const { logout, loginWithRedirect, user } = useAuth0()
@@ -61,11 +62,7 @@ function Nav() {
               {user && (
                 <Box width="9.5vw" maxWidth="10vw">
                   <Card>
-                    <Flex
-                      gap="3"
-                      align="center"
-                      
-                    >
+                    <Flex gap="3" align="center">
                       <Avatar
                         size="4"
                         src={user?.picture}
@@ -85,6 +82,7 @@ function Nav() {
                 </Box>
               )}
             </div>
+            <Search />
             <div className="nav-chats">
               <h1 className="nav-title">Chats: </h1>
               <div>
@@ -120,7 +118,11 @@ function Nav() {
                           </>
                         ) : (
                           <>
-                            <Box width="9.5vw" maxWidth="10vw" onClick={() => handleChatClick(chat.id)}>
+                            <Box
+                              width="9.5vw"
+                              maxWidth="10vw"
+                              onClick={() => handleChatClick(chat.id)}
+                            >
                               <Card size="1">
                                 <Flex gap="3" align="center">
                                   <Avatar
