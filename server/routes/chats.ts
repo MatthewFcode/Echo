@@ -27,11 +27,23 @@ router.get('/all/:id', async (req, res) => {
   }
 })
 
+// Get chat by chat.id
+router.get('/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    const result = await db.getChatByChatId(id)
+    res.json(result)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 router.post('/', async (req, res) => {
   try {
     const { userId, userId2 } = req.body
-    const result = await db.createChat(userId, userId2)
-    res.status(201).json(result)
+
+    const result = await db.createChat({ userId, userId2 })
+    res.status(200).json(result)
   } catch (err) {
     console.log(err)
     res.status(400).json('Bad Post request')

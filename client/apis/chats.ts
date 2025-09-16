@@ -18,3 +18,16 @@ export async function getChatById(token: string, id: number) {
     .set('Authorization', `Bearer ${token}`)
   return response.body as Chat
 }
+
+export async function createChat({
+  userId,
+  userId2,
+}: {
+  userId: number
+  userId2: number
+}) {
+  const result = await request
+    .post(`${rootURL}/chats`)
+    .send({ userId, userId2 })
+  return result.body
+}

@@ -24,7 +24,7 @@ router.get('/', checkJwt, async (req: JwtRequest, res) => {
     res.json(result)
   } catch (err) {
     console.log(err)
-    res.send(500).json('Internal Server Error')
+    res.status(500).json('Internal Server Error')
   }
 })
 
@@ -43,9 +43,10 @@ router.get('/:id', async (req, res) => {
   try {
     const id = Number(req.params.id)
     const result = await db.getUserByUserId(id)
-    res.json({user: result})
+    res.json({ user: result })
   } catch (err) {
     console.log(err)
+    res.status(500).json('Internal Server Error')
   }
 })
 

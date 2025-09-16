@@ -3,20 +3,16 @@
  * @returns { Promise<void> }
  */
 export async function seed(knex) {
+  // Deletes ALL existing entries
+
   await knex('messages').insert([
     {
-      chat_id: 1,
-      message: 'Hey, how are you?',
-      image: '',
-      user_id: 1,
-      time_stamp: '2025-09-12T10:00:00Z',
-    },
-    {
-      chat_id: 1,
-      message: 'Doing great! You?',
-      image: '',
       user_id: 2,
-      time_stamp: '2025-09-12T10:01:00Z',
+      chat_id: 1,
+      message: 'This is a seed message',
+      image:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/250px-Image_created_with_a_mobile_phone.png',
+      time_stamp: '2025-09-15T06:26:08.123',
     },
   ])
 }

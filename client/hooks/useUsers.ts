@@ -1,9 +1,14 @@
-import { MutationFunction, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { getMe, getUserById, addUser } from '../apis/users'
+import {
+  MutationFunction,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
+import { getMe, getUserById, addUser, getAllUsers } from '../apis/users'
 import { useAuth0 } from '@auth0/auth0-react'
 
 export function useUsers() {
-  const {user, getAccessTokenSilently } = useAuth0()
+  const { user, getAccessTokenSilently } = useAuth0()
 
   const query = useQuery({
     queryKey: ['users'],
@@ -38,7 +43,6 @@ export function useAddUser() {
   return useUserMutation(addUser)
 }
 
-
 export function useUserById(id: number) {
   const { user, getAccessTokenSilently } = useAuth0()
 
@@ -48,9 +52,19 @@ export function useUserById(id: number) {
       const token = await getAccessTokenSilently()
       return getUserById(token, id)
     },
-    enabled: !!user && !!id
+    enabled: !!user && !!id,
   })
-  
+}
 
-  
+export function useAllUsers() {
+  const { getAccessTokenSilently, user } = useAuth0()
+
+  return useQuery({
+    queryKey: ['all-users'],
+    queryFn: async () => {
+      const token = await getAccessTokenSilently()
+      return getAllUsers({ token })
+    },
+    enabled: !!user,
+  })
 }

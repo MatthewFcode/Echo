@@ -29,6 +29,15 @@ export async function getChat(userId: number, userId2: number) {
   }
 }
 
+export async function getChatByChatId(id: number) {
+  try {
+    const result = await db('chats').where('id', id).returning('*')
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export async function getAllChats(userId: number) {
   try {
     const chats = await db('chats')
@@ -53,7 +62,13 @@ export async function getAllChats(userId: number) {
   }
 }
 
-export async function createChat(userId: number, userId2: number) {
+export async function createChat({
+  userId,
+  userId2,
+}: {
+  userId: number
+  userId2: number
+}) {
   try {
     const result = await db('chats').insert({
       user_id: userId,

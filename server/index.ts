@@ -1,8 +1,8 @@
-import server from './server.ts'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { server, wss } from './server.ts'
 
 const PORT = process.env.PORT || 3000
 
 server.listen(PORT, () => {
-  // eslint-disable-next-line no-console
   console.log('Server listening on port', PORT)
 })

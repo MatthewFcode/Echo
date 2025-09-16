@@ -4,7 +4,10 @@ import connection from '../db/connection'
 import server from '../server'
 import request from 'supertest'
 import jwt from 'jsonwebtoken'
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 const db = connection
 
 const testUserId = 'auth0|test-user-id'
