@@ -18,17 +18,14 @@ const mockJwt = jwt.sign(
   { algorithm: 'HS256', expiresIn: '1h' },
 )
 
-// Migrates any changes to database before running tests
 beforeAll(async () => {
   await db.migrate.latest()
 })
 
-// Runs seeds to return to original database data
 beforeEach(async () => {
   await db.seed.run()
 })
 
-// Closes down the connection after tests run
 afterAll(async () => {
   await db.destroy()
 })
@@ -62,7 +59,9 @@ describe('getting a user by an ID', () => {
         profile_pic: '/images/test.jpg',
       },
     })
+
     console.log('JWT ENV:', process.env.NODE_ENV)
+
   })
 })
 
@@ -95,7 +94,7 @@ describe('posting a user to the database', () => {
     // The DB returns snake_case keys, so match them exactly
     expect(response.body[0]).toStrictEqual({
       auth0id: 'auth0|test-user-id',
-      id: expect.any(Number), // this will change if DB state changes (you can use `expect.any(Number)` instead)
+      id: expect.any(Number),
       user_name: 'Hugh Janus',
       profile_pic: '',
     })

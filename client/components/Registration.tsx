@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
-
 import { useAuth0 } from '@auth0/auth0-react'
 import { useUsers } from '../hooks/useUsers'
 import { IfAuthenticated, IfNotAuthenticated } from './Authorization'

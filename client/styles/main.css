@@ -3,83 +3,64 @@
 @tailwind utilities;
 
 html {
-  overflow-y: hidden;
-  overflow-x: hidden;
+  @apply overflow-x-hidden overflow-y-hidden bg-gray-100;
 }
+
 .app {
+  @apply flex h-screen w-screen font-sans text-gray-800;
 }
 
 .nav-container {
-  display: flex;
-  width: 10vw;
-  border-right: 3px solid black;
-  height: 70vh;
-  margin: 1vh;
+  @apply m-3 flex h-[70vh] w-[12vw] flex-col rounded-2xl border-r-4 border-gray-300 
+         bg-white p-4 shadow-md;
 }
 
 .sign-out-button {
-  padding-bottom: 0.5vh;
-  margin-bottom: 0.75vw;
-  border-bottom: 3px solid black;
+  @apply mb-4 border-b-2 border-gray-300 pb-2 text-sm font-medium text-red-500
+         transition hover:border-red-400 hover:text-red-600;
 }
 
 .signed-in-info {
-  display: flex;
-  margin-top: 0.75vw;
+  @apply mt-4 flex items-center gap-2;
 }
 
 .profile-name {
-  transform: translate(0, 2.75vh);
+  @apply translate-y-[2.75vh] text-base font-semibold text-gray-700;
 }
 
 .profile-photo {
-  width: 3vw;
-  margin: 0.5vw;
-  border-radius: 3vw;
+  @apply h-12 w-12 rounded-full border-2 border-gray-300 shadow-sm;
 }
 
 .nav-chats {
-  margin-top: 1vh;
+  @apply mt-4;
 }
 
 .current-chats {
-  margin-top: 0.75vw;
+  @apply mt-4 space-y-3;
 }
 
 .nav-title {
-  font-size: 2vw;
-  border-bottom: 3px solid black;
-  border-top: 3px solid black;
-}
-
-.image-input {
+  @apply border-y-2 border-gray-300 py-2 text-center text-lg font-bold 
+         uppercase tracking-wide text-gray-700;
 }
 
 .message-input {
-  padding-left: 2vw;
-  border: 1px solid black;
-  width: 25vw;
-  height: 5vh;
-  margin-right: 1.5vw;
+  @apply mr-4 h-[6vh] w-[28vw] rounded-lg border border-gray-300 pl-4 
+         shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400;
 }
 
 .message-container {
-  transform: translate(5vw, -60vh);
+  transform: translate(3vw, -60vh);
 }
 
 .chat-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 60vh;
-  overflow-y: scroll;
+  @apply -ml-12 flex h-[60vh] flex-col justify-end space-y-3 
+         overflow-y-scroll rounded-2xl bg-blue-50 p-6 shadow-inner;
 }
 
 .message-user-info {
-  position: absolute;
-  transform: translate(-27.75vw);
-  font-size: 0.5vw;
-  font-family: serif;
+  @apply absolute -translate-x-[27.75vw] font-serif text-xs text-gray-500;
 }
 
 .message-text-content {
@@ -87,4 +68,8 @@ html {
   height: fit-content;
   padding: 0.3vw 0.4vw;
   justify-content: flex-end;
+}
+
+.message-image {
+  @apply rounded-lg border-gray-500 shadow-sm transition-colors hover:border-gray-700;
 }

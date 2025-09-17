@@ -60,7 +60,6 @@ function Search() {
     }
   }
 
-
   return (
     <div>
       <input

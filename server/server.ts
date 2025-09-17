@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // WebSocket server setup
+
 wss.on('connection', (ws) => {
   console.log('Client connected')
 
