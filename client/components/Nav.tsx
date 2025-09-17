@@ -127,7 +127,7 @@ function Nav() {
                                   <Avatar
                                     size="4"
                                     radius="full"
-                                    src={chat.u2ProfilePic}
+                                    src={chat.u1ProfilePic}
                                     color="indigo"
                                     fallback="Avatar"
                                   />
