@@ -101,13 +101,13 @@ function Nav() {
                                   <Avatar
                                     size="4"
                                     radius="full"
-                                    src={chat.u1ProfilePic}
+                                    src={chat.u2ProfilePic}
                                     color="indigo"
                                     fallback="Avatar"
                                   />
                                   <Box>
                                     <Text as="div" size="2" weight="bold">
-                                      {chat.u1UserName}
+                                      {chat.u2UserName}
                                     </Text>
 
                                     <Text as="div" size="2" color="gray">
