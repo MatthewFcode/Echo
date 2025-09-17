@@ -89,7 +89,7 @@ function Nav() {
                   data.map((chat) => {
                     return (
                       <div className="current-chats" key={chat.id}>
-                        {chat.u2Id == userId ? (
+                        {/* {chat.u2Id == userId ? ( */}
                           <>
                             <Box
                               width="9.5vw"
@@ -118,7 +118,7 @@ function Nav() {
                               </Card>
                             </Box>
                           </>
-                        ) : (
+                        {/* ) : (
                           <>
                             <Box
                               width="9.5vw"
@@ -146,7 +146,7 @@ function Nav() {
                               </Card>
                             </Box>
                           </>
-                        )}
+                        )} */}
                       </div>
                     )
                   })
