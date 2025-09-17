@@ -45,7 +45,6 @@ function Nav() {
 
   const handleChatClick = (id: number) => {
     navigate(`/chat/${id}`)
-    console.log('Box clicked!')
   }
 
   return (
@@ -92,7 +91,11 @@ function Nav() {
                       <div className="current-chats" key={chat.id}>
                         {chat.u2Id == userId ? (
                           <>
-                            <Box width="9.5vw" maxWidth="10vw">
+                            <Box
+                              width="9.5vw"
+                              maxWidth="10vw"
+                              onClick={() => handleChatClick(chat.id)}
+                            >
                               <Card size="1">
                                 <Flex gap="3" align="center">
                                   <Avatar
