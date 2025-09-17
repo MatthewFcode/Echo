@@ -30,8 +30,14 @@ router.post('/', async (req, res) => {
   try {
     const { userId, userId2 } = req.body
 
-    const result = await db.createChat({ userId, userId2 })
-    res.status(201).json(result)
+    const check = await db.checkIfChatExists({ userId, userId2 })
+
+    if (check == undefined) {
+      const result = await db.createChat({ userId, userId2 })
+      res.status(201).json(result)
+    } else {
+      res.json([check.id])
+    }
   } catch (err) {
     console.log(err)
     res.status(400).json('Bad Post request')

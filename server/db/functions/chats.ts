@@ -52,3 +52,21 @@ export async function createChat({
     console.log(err)
   }
 }
+
+export async function checkIfChatExists({
+  userId,
+  userId2,
+}: {
+  userId: number
+  userId2: number
+}) {
+  try {
+    const result = await db('chats')
+      .where({ user_id2: userId })
+      .andWhere({ user_id: userId2 })
+      .first()
+    return result
+  } catch (err) {
+    console.log(err)
+  }
+}
