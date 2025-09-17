@@ -3,8 +3,6 @@ import connection from '../connection'
 
 const db = connection
 
-// getting the messgaes by the chat id and the user id
-
 export async function getMessagesByChatId(chatId: number) {
   try {
     const result = await db('messages')
@@ -46,7 +44,6 @@ export async function getMessagesById(chat_id: number) {
   }
 }
 
-// sending chat by the chat id and the user id
 export async function sendChat(newChat: {
   chat_id: number
   message: string
@@ -63,7 +60,6 @@ export async function sendChat(newChat: {
   }
 }
 
-// Delete message
 export async function deleteMessage(id: number) {
   try {
     await db('messages').where({ id }).del()

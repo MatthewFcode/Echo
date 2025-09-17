@@ -9,7 +9,7 @@ interface AddMessageFunction {
   token: string  
 }
 
-// POST /api/v1/messages (sends a message)
+// POST /api/v1/messages
 export async function addMessage({token, newMessage}: AddMessageFunction): Promise<Message> {
   return await request
     .post(`${rootURL}/messages`)
@@ -24,7 +24,7 @@ interface getMessageByChatIdFunction {
   token: string
 }
 
-// GET /api/v1/messages/:id (gets messages by chat id)
+// GET /api/v1/messages/:id
 export async function getMessageByChatId({token, id}: getMessageByChatIdFunction): Promise<MessageData[]> {
   const response = await request.get(`${rootURL}/messages/${id}`).set('Authorization', `Bearer ${token}`)
   return response.body as Message[]
@@ -35,6 +35,7 @@ interface deleteMessageFunction {
   id: number
 }
 
+// DELETE /api/v1/messages/:id
 export async function deleteMessage({token, id}: deleteMessageFunction) {
   await request.delete(`${rootURL}/messages/${id}`).set('Authorization', `Bearer ${token}`)
   return
