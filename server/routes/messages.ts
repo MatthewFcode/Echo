@@ -59,7 +59,7 @@ router.post('/', upload.single('uploaded_file'), async (req, res) => {
       }
     })
 
-    res.json({ newMessage: result })
+    res.status(201).json(result) //{ newMessage: result }
   } catch (err) {
     res.sendStatus(400).json('something went wrong with the image url')
   }

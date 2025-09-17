@@ -1,6 +1,6 @@
 /**
  * @param { import("knex").Knex } knex
-<<<<<<< HEAD
+
 
  * @returns { Promise<void> }
  */

@@ -21,21 +21,22 @@ afterAll(async () => {
   await db.destroy()
 })
 
-describe('gets a chat id from 2 users IDS', () => {
-  it('takes two user ids and returns the chat ID between those two users and some of their user information', async () => {
-    const response = await request(server)
-      .get('/api/v1/chats')
-      .query({ userId: 1, userId2: 2 })
+describe('gets a chat from a chat ID', () => {
+  it('takes a chat ID and returns a chat ID based on that information', async () => {
+    const response = await request(server).get(`/api/v1/chats/${1}`)
     expect(response.status).toBe(StatusCodes.OK)
-    expect(response.body).toHaveProperty('id')
-    expect(response.body.u1Id).toBe(1)
-    expect(response.body.u2Id).toBe(2)
+
+    const chat = response.body
+
+    expect(chat).toHaveProperty('id')
+    expect(chat.user_id).toBe(2)
+    expect(chat.user_id2).toBe(1)
   })
 })
 
 describe('gets the chats for the user that is logged in and has message previously', () => {
   it('gets the ID the of the user and passes it to the function to return all its associated chats', async () => {
-    const response = await request(server).get('/api/v1/chats/all/1')
+    const response = await request(server).get(`/api/v1/chats/all/${1}`)
     expect(response.status).toBe(StatusCodes.OK)
     // the first chat in the response for that users chats
     const chat = response.body[0]

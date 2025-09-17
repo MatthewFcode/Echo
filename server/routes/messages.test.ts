@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 import connection from '../db/connection'
 import { server } from '../server'
 import request from 'supertest'
-
+import { MessageInit } from '../../models/Message.ts'
 const db = connection
 
 // Migrates any changes to database before running tests
@@ -24,16 +24,20 @@ afterAll(async () => {
 describe('Getting all messages from a chat', () => {
   it('gets all the messages from a specific chat Id unique to a conversation between two users', async () => {
     const response = await request(server)
-      .get('/api/v1/messages')
+      .get(`/api/v1/messages/${1}`)
       .query({ chatId: 1 })
     expect(response.status).toBe(StatusCodes.OK)
     expect(response.body[0]).toStrictEqual({
-      chat_id: 1,
-      message: 'Hey, how are you?',
-      image: '',
-      user_name: 'Bob',
-      profile_pic: 'https://static.wikia.nocookie.net/btb/images/9/9d/434.jpg',
-      time_stamp: '2025-09-12T10:00:00Z',
+      chatId: expect.any(Number),
+      id: expect.any(Number),
+      message: 'This is a seed message',
+      image:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/250px-Image_created_with_a_mobile_phone.png',
+      usersUserName: 'abe',
+      timeStamp: expect.any(String),
+      userProfilePic:
+        'https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg',
+      userId: expect.any(Number),
     })
   })
 })
@@ -51,13 +55,18 @@ describe('Sending Messages', () => {
       .post('/api/v1/messages')
       .send(message)
     expect(response.status).toBe(StatusCodes.CREATED)
-    expect(response.body[0]).toStrictEqual({
-      id: 3,
-      chat_id: 1,
-      message: 'test message from vitest',
-      image: '',
-      user_id: 1,
-      time_stamp: '2025-09-12T12:00:00Z',
-    })
+    expect(response.body[0]).toStrictEqual(3)
+  })
+})
+
+describe('Deleting messages', () => {
+  it('deletes the paticular message by its unique Id from the paticular chat that it was in', async () => {
+    const result = await request(server).delete(`/api/v1/messages/${2}`)
+    expect(result.status).toBe(StatusCodes.NO_CONTENT)
+
+    const getAfterDelete = await request(server).get('/api/v1/messages/1')
+    const messages = getAfterDelete.body
+    const deletedMsg = messages.find((msg: MessageInit) => msg.id === 2)
+    expect(deletedMsg).toBeUndefined()
   })
 })
