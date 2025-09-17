@@ -7,7 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { useParams } from 'react-router'
 import Message from './Message.tsx'
 
-const ws = new WebSocket('https://whats-up-zh1w.onrender.com')
+const ws = new WebSocket('wss://whats-up-zh1w.onrender.com/ws')
 
 ws.onopen = () => {
 }
