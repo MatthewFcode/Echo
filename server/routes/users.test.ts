@@ -59,6 +59,9 @@ describe('getting a user by an ID', () => {
         profile_pic: '/images/test.jpg',
       },
     })
+
+    console.log('JWT ENV:', process.env.NODE_ENV)
+
   })
 })
 
@@ -88,6 +91,7 @@ describe('posting a user to the database', () => {
 
     expect(response.status).toBe(StatusCodes.CREATED)
 
+    // The DB returns snake_case keys, so match them exactly
     expect(response.body[0]).toStrictEqual({
       auth0id: 'auth0|test-user-id',
       id: expect.any(Number),

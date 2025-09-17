@@ -1,6 +1,6 @@
 export interface MessageData {
   usersUserName: string
-  userProfilePic: string 
+  userProfilePic: string
   id: number
   chatId: number
   message?: string
@@ -12,4 +12,15 @@ export interface MessageData {
 
 export interface Message extends MessageData {
   id: number
+}
+
+export type MessageInit = {
+  id: number
+  chatId: number
+  message: string
+  image: string
+  userId: number
+  timeStamp: string
+  usersUserName: string
+  userProfilePic: string
 }

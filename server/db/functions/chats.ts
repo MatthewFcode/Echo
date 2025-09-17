@@ -4,7 +4,7 @@ const db = connection
 
 export async function getChatByChatId(id: number) {
   try {
-    const result = await db('chats').where('id', id).returning('*')
+    const result = await db('chats').where('id', id).first()
     return result
   } catch (error) {
     console.log(error)

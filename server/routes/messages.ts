@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
     const chat_id = Number(req.params.id)
 
     const result = await db.getMessagesById(chat_id)
-    res.json(result)
+    res.status(200).json(result)
   } catch (err) {
     console.log(err)
     res.send(500).json('Internal server error')
@@ -37,6 +37,8 @@ router.post('/', upload.single('uploaded_file'), async (req, res) => {
     if (req.file) {
       profilePhoto = `/images/${req.file?.filename}`
     }
+
+
     const convert = {
       message,
       time_stamp: timeStamp,
@@ -46,7 +48,9 @@ router.post('/', upload.single('uploaded_file'), async (req, res) => {
     }
     const result = await db.sendChat(convert)
 
-    // Websocket
+    // This will broadcast the changes to the server to other clients connected to the websocket
+
+
     wss.clients.forEach((client) => {
       if (client.readyState === ws.OPEN) {
         client.send(
@@ -58,7 +62,10 @@ router.post('/', upload.single('uploaded_file'), async (req, res) => {
       }
     })
 
-    res.json({ newMessage: result })
+
+    res.status(201).json(result) //{ newMessage: result }
+
+
   } catch (err) {
     res.sendStatus(400).json('something went wrong with the image url')
   }
