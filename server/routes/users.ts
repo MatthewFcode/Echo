@@ -17,7 +17,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-// getting all the users (auth protected but no auth Id needed to go in to the function so it isnt grabbeb out)
 router.get('/', checkJwt, async (req: JwtRequest, res) => {
   try {
     const result = await db.getAllUsers()
@@ -58,10 +57,8 @@ router.post(
     try {
       const auth0Id = req.auth?.sub
       const { userName } = req.body
-      // handling multer
       let profilePic = ''
       if (req.file) {
-        // Store the relative path to the uploaded file
         profilePic = `/images/${req.file.filename}`
       }
       const convert = {

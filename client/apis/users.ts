@@ -7,7 +7,7 @@ interface GetUserFunction {
   token: string
 }
 
-// GET /api/v1/users (gets all users)
+// GET /api/v1/users/me
 export async function getMe({ token }: GetUserFunction): Promise<User | null> {
   return await request
     .get(`${rootURL}/users/me`)
@@ -16,7 +16,7 @@ export async function getMe({ token }: GetUserFunction): Promise<User | null> {
     .catch((error) => console.log(error))
 }
 
-// GET /api/v1/users/:id (get a specific user by id)
+// GET /api/v1/users/:id
 export async function getUserById(token: string, id: number) {
   const response = await request
     .get(`${rootURL}/users/${id}`)
@@ -24,6 +24,7 @@ export async function getUserById(token: string, id: number) {
   return response.body.user[0] as User
 }
 
+// POST /api/v1/users
 export async function addUser({
   formData,
   token,
@@ -42,6 +43,7 @@ interface GetAllUsersFunction {
   token: string
 }
 
+// GET /api/v1/users
 export async function getAllUsers({ token }: GetAllUsersFunction) {
   return await request
     .get(`${rootURL}/users`)

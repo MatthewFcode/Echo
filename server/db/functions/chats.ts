@@ -1,5 +1,3 @@
-// we wanna message people provatley or we wanna add a converstation to them if we havent messaged them before (get or insert based on the users)
-
 import connection from '../connection.ts'
 
 const db = connection

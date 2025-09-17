@@ -10,10 +10,10 @@ import Message from './Message.tsx'
 const ws = new WebSocket('ws://localhost:3000')
 
 ws.onopen = () => {
-};
+}
 
 ws.onmessage = event => {
-  const data = JSON.parse(event.data);
+  const data = JSON.parse(event.data)
   if (data.type === 'database_change') {
     window.location.reload() 
   }

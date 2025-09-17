@@ -90,7 +90,6 @@ function Nav() {
                   data.map((chat) => {
                     return (
                       <div className="current-chats" key={chat.id}>
-                        {/* Important ternery to access both users - leave this comment here */}
                         {chat.u2Id == userId ? (
                           <>
                             <Box width="9.5vw" maxWidth="10vw">
