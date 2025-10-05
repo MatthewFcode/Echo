@@ -4,22 +4,24 @@ import { ParamsDictionary } from 'express-serve-static-core'
 import { JwtPayload } from 'jsonwebtoken'
 import jwks from 'jwks-rsa'
 
-const domain = 'https://hotoke-abe.au.auth0.com'
-const audience = 'https://whats-up/api'
+const domain = 'https://matthew-matai-2025.au.auth0.com'
+const audience = 'https://echo/api'
 
 const isTest = process.env.NODE_ENV === 'test'
 
-const checkJwt = isTest ? jwt({secret: 'test-secret', algorithms: ['HS256']}) : jwt({
-  secret: jwks.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `${domain}/.well-known/jwks.json`,
-  }) as GetVerificationKey,
-  audience: audience,
-  issuer: `${domain}/`,
-  algorithms: ['RS256'],
-})
+const checkJwt = isTest
+  ? jwt({ secret: 'test-secret', algorithms: ['HS256'] })
+  : jwt({
+      secret: jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: `${domain}/.well-known/jwks.json`,
+      }) as GetVerificationKey,
+      audience: audience,
+      issuer: `${domain}/`,
+      algorithms: ['RS256'],
+    })
 
 export default checkJwt
 
