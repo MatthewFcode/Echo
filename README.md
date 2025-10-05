@@ -1,5 +1,9 @@
+# 🌐 Echo
+
 # A full-stack browser messaging app brought from the future to keep you, your family, friends, and fellow programmers connected.
 
-Build with a database and Auth0 integreated signin/out
+**Echo** is a browser-based messaging app that lets users connect, search, and send direct messages (DMs) to friends in real time.  
+Originally developed as a **Dev Academy final group project**, I have started working solo to enhance the apps performance.
 
-link to deployed site: https://whats-up-zh1w.onrender.com/
+
+Link to the original repo --> https://github.com/hotoke-2025/whats-up
