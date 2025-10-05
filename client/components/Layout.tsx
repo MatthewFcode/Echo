@@ -6,7 +6,7 @@ export default function Layout() {
   return (
     <>
       <header>
-        <img src="/images/rect4.webp" alt="whats-up-logo" />
+        <img src="/images/init.png" alt="Echo" />
       </header>
       <main>
         <Theme>
