@@ -11,6 +11,7 @@ export default function Layout() {
       <main>
         <Theme>
           <Nav />
+
           <Outlet />
         </Theme>
       </main>
