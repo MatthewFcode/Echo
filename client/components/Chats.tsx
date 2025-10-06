@@ -61,36 +61,6 @@ function Chat() {
     return <div>Error loading data.</div>
   }
 
-  // return (
-  //   <>
-  //     <div>
-  //       <h2>Messages</h2>
-  //       {messageByChatIdData?.map((message) => {
-  //         return (
-  //           <div key={message.timeStamp}>
-  //             <img src={message.userProfilePic} alt="user profile pic" />
-  //             <p>
-  //               {message.usersUserName} - {message.timeStamp}
-  //             </p>
-  //             <p>{message.message}</p>
-  //             {message.image && message.image?.length >= 1 ? (
-  //               <img
-  //                 className="message-image"
-  //                 style={{ width: '10vw', paddingTop: '1vh' }}
-  //                 alt="message-image"
-  //                 src={message.image}
-  //               ></img>
-  //             ) : (
-  //               <p></p>
-  //             )}
-  //             <button onClick={() => handleDelete(message.id)}>Delete</button>
-  //           </div>
-  //         )
-  //       })}
-  //     </div>
-  //     <Message />
-  //   </>
-  // )
   return (
     <div className="chat-page">
       <div className="chat-messages">

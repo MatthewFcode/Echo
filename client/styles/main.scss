@@ -1,3 +1,7 @@
+*  {
+  font-family: 'Press Start 2P', cursive, sans-serif;
+}
+
 $primary-green: #1a4d2e;
 $secondary-green: #2d6a4f;
 $accent-green: #40916c;
@@ -177,7 +181,7 @@ input[type="text"][placeholder*="Search"] {
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       transition: all 0.3s ease;
 
       &:hover {
@@ -201,7 +205,7 @@ input[type="text"][placeholder*="Search"] {
   .current-chats {
     margin-bottom: 1rem;
     cursor: pointer;
-
+    
     > div {
       width: 100% !important;
       max-width: 100% !important;
@@ -218,9 +222,11 @@ input[type="text"][placeholder*="Search"] {
 .chat-page {
   margin-left: 320px;
   width: calc(100% - 320px);
+  //width: 1350px;
   padding: 2rem;
   padding-bottom: 180px;
   min-height: calc(100vh - 80px);
+  background-color: #2d6a4f;
 
   @media (max-width: $tablet) {
     margin-left: 280px;
@@ -495,3 +501,4 @@ footer {
   color: $very-light-green;
   border-top: 2px solid $accent-green;
 }
+
