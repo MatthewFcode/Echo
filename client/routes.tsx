@@ -2,7 +2,7 @@ import { createRoutesFromElements, Route } from 'react-router'
 import App from './components/App.tsx'
 import Registration from './components/Registration.tsx'
 import Layout from './components/Layout.tsx'
-import { Chat } from './components/Chat.tsx'
+import Chat from './components/Chats.tsx'
 
 export default createRoutesFromElements(
   <>
