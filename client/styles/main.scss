@@ -507,3 +507,181 @@ footer {
   border-top: 2px solid $accent-green;
 }
 
+
+//NEWS TICKER
+.news-ticker-container {
+  flex: 1;
+  height: 60px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border-left: 2px solid $accent-green;
+  padding-left: 2rem;
+  margin-left: 1rem;
+
+  @media (max-width: $mobile) {
+    height: 45px;
+    padding-left: 1rem;
+    margin-left: 0.5rem;
+  }
+}
+
+.news-ticker {
+  display: flex;
+  white-space: nowrap;
+  animation: scroll-left 50s linear infinite;
+  
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.news-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 2rem;
+  color: $cream;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  
+  &:hover {
+   // color: $very-light-green;
+   color: #62d8ff;
+    
+    .news-item-image {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(116, 198, 183, 0.5);
+    }
+  }
+
+  @media (max-width: $mobile) {
+    font-size: 0.75rem;
+    padding: 0 1rem;
+    gap: 0.5rem;
+  }
+}
+
+.news-item-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid $accent-green;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+
+  @media (max-width: $mobile) {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.news-item-title {
+  font-size: 0.8rem;
+  font-weight: 500;
+ 
+
+  @media (max-width: $mobile) {
+    font-size: 0.75rem;
+    max-width: 200px;
+  }
+}
+
+.news-separator {
+  color: $accent-green;
+  margin: 0 1rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+// Main Layout (back to original)
+main {
+  display: flex;
+  width: 100%;
+  margin-top: 80px;
+  min-height: calc(100vh - 80px);
+
+  @media (max-width: $mobile) {
+    margin-top: 60px;
+    flex-direction: column;
+  }
+}
+
+// Navigation Sidebar (back to original)
+.nav-container {
+  position: fixed;
+  left: 0;
+  top: 80px;
+  width: 320px;
+  height: calc(100vh - 80px);
+  background: linear-gradient(180deg, $secondary-green 0%, $primary-green 100%);
+  border-right: 2px solid $accent-green;
+  overflow-y: auto;
+  padding: 1.5rem;
+  box-shadow: 4px 0 12px $shadow;
+
+  @media (max-width: $tablet) {
+    width: 280px;
+  }
+
+  @media (max-width: $mobile) {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 2px solid $accent-green;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .sign-out-button button,
+  .signed-in-info button {
+    width: 100%;
+    background: $accent-green;
+    color: $white;
+    border: none;
+    transition: all 0.3s ease;
+    font-family: 'Press Start 2P', cursive, sans-serif;
+
+    &:hover {
+      background: $light-green;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px $hover-shadow;
+    }
+  }
+
+  .signed-in-info > div {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .signed-in-info .rt-Card,
+  .current-chats .rt-Card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+  }
+}
