@@ -68,54 +68,57 @@ function Register() {
   }
 
   return (
-    <div>
-      <div>
-        <IfAuthenticated>
-          <h1>Choose a username and profile picture for Whats Up!!</h1>
-          {errorMsg && (
-            <div>
-              Error: {errorMsg}
-              <button onClick={hideError}>Okay</button>
-            </div>
-          )}
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="userName">Username: </label>
-              <input
-                style={{ border: '1px solid black', margin: '0.2vw' }}
-                type="text"
-                id="userName"
-                name="userName"
-                value={form.userName}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="profile-piccture">Profile Picture:</label>
-              <input
-                style={{ border: '1px solid black', margin: '0.2vw' }}
-                type="file"
-                id="profile_pic"
-                name="profile_pic"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
-            </div>
-            <div>
+    <>
+      <IfAuthenticated>
+        <div className="register-container">
+          <div className="register-content">
+            <h1>Welcome to Whats Up! 🎮</h1>
+            {errorMsg && (
+              <div className="register-error">
+                <span>Error: {errorMsg}</span>
+                <button onClick={hideError}>Okay</button>
+              </div>
+            )}
+            <form onSubmit={handleSubmit} className="register-form">
+              <div className="form-group">
+                <label htmlFor="userName">Choose Your Username</label>
+                <input
+                  type="text"
+                  id="userName"
+                  name="userName"
+                  value={form.userName}
+                  onChange={handleChange}
+                  placeholder="Enter a cool username..."
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="profile_pic">Upload Profile Picture</label>
+                <input
+                  type="file"
+                  id="profile_pic"
+                  name="profile_pic"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+              </div>
               <button
-                style={{ border: '1px solid black', margin: '0.2vw' }}
+                type="submit"
+                className="submit-button"
                 disabled={!form.userName}
               >
-                Register
+                Complete Registration
               </button>
-            </div>
-          </form>
-        </IfAuthenticated>
-        <IfNotAuthenticated>
-          <h1>Please sign in</h1>
-        </IfNotAuthenticated>
-      </div>
-    </div>
+            </form>
+          </div>
+        </div>
+      </IfAuthenticated>
+      <IfNotAuthenticated>
+        <div className="not-authenticated">
+          <h1>Please sign in to continue</h1>
+        </div>
+      </IfNotAuthenticated>
+    </>
   )
 }
 

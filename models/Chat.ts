@@ -5,6 +5,8 @@ export interface ChatData {
 
 export interface Chat extends ChatData {
   id: number
+  user_id: number
+  user_id2: number
 }
 
 export interface BothUsers {
@@ -18,4 +20,3 @@ export interface BothUsers {
   u2Auth0Id: string
   u2ProfilePic: string
 }
-

@@ -35,6 +35,7 @@ function Search() {
   interface User {
     id: number
     user_name: string
+    profile_pic: string
   }
 
   const filteredUsers: User[] =
@@ -78,6 +79,7 @@ function Search() {
                 onClick={() => handleStartChat(u.id)}
                 aria-label={`Chat with ${u.user_name}`}
               >
+                <img src={u.profile_pic} alt={u.user_name} />
                 Chat with {u.user_name}
               </button>
             </li>

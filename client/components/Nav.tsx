@@ -138,9 +138,6 @@ function Nav() {
                                     <Text as="div" size="2" weight="bold">
                                       {chat.u2UserName}
                                     </Text>
-                                    <Text as="div" size="2" color="gray">
-                                      Chat Id: {chat.id}
-                                    </Text>
                                   </Box>
                                 </Flex>
                               </Card>
