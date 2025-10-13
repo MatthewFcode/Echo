@@ -3,10 +3,11 @@ import {
   useGetMessageByChatId,
 } from '../hooks/useMessages.ts'
 import { useAuth0 } from '@auth0/auth0-react'
-import { useParams } from 'react-router'
+import { useParams, useNavigate } from 'react-router'
 import Message from './Message.tsx'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
+import { useUsers } from '../hooks/useUsers.ts'
 
 function Chat() {
   const queryClient = useQueryClient()
@@ -33,13 +34,37 @@ function Chat() {
     ws.onerror = (error) => {
       console.log(error)
     }
-  })
+  }, [queryClient])
 
   const { id } = useParams<{ id: string }>()
   const chatId = Number(id)
   const { chatById, messageByChatId } = useGetMessageByChatId(chatId)
   const deleteMessage = useDeleteMutation()
   const { getAccessTokenSilently } = useAuth0()
+
+  const navigate = useNavigate()
+
+  const {
+    data: currentUser,
+    isPending: isUserPending,
+    isError: isUserError,
+  } = useUsers()
+
+  useEffect(() => {
+    // Wait until we have both the chat data and current user data
+    if (chatById.data && currentUser) {
+      // Check if current user is either user1 or user2 in this chat
+      const isAuthorized =
+        chatById.data.u1Id === currentUser.id ||
+        chatById.data.u2Id === currentUser.id
+
+      // If user is NOT authorized (not part of this chat), kick them out
+      if (!isAuthorized) {
+        console.log('Unauthorized access attempt to chat', chatId)
+        navigate('/') // Send them back to home
+      }
+    }
+  }, [chatById.data, currentUser, navigate, chatId])
 
   const handleDelete = async (id: number) => {
     try {
@@ -53,11 +78,11 @@ function Chat() {
 
   const messageByChatIdData = messageByChatId.data
 
-  if (chatById.isLoading || messageByChatId.isLoading) {
+  if (chatById.isLoading || messageByChatId.isLoading || isUserPending) {
     return <div>Loading...</div>
   }
 
-  if (chatById.isError || messageByChatId.isError) {
+  if (chatById.isError || messageByChatId.isError || isUserError) {
     return <div>Error loading data.</div>
   }
 
