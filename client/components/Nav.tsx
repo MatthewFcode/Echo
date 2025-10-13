@@ -154,16 +154,26 @@ function Nav() {
             </div>
           </IfAuthenticated>
           <IfNotAuthenticated>
-            <Flex gap="3" align="center">
-              <Button onClick={handleSignIn} radius="full" variant="soft">
-                Sign in
+            <div className="sign-in-cta">
+              <h2 className="cta-title">Ready to Connect?</h2>
+              <p className="cta-subtitle">
+                Join the conversation and start chatting with friends
+              </p>
+              <Button
+                onClick={handleSignIn}
+                radius="full"
+                size="3"
+                className="cta-button"
+              >
+                🚀SignUp🚀
               </Button>
-              <Box>
-                <Text as="div" size="2" weight="bold">
-                  Please Sign in to Access Chats...
-                </Text>
-              </Box>
-            </Flex>
+              <div className="cta-features">
+                <ul>
+                  <li>✓ Instant messaging</li> <li>✓ Image sharing</li>{' '}
+                  <li>✓ Real time updates</li>
+                </ul>
+              </div>
+            </div>
           </IfNotAuthenticated>
         </nav>
       </div>

@@ -938,3 +938,91 @@ main {
     }
   }
 }
+
+//Styles for the IfNotAutheticated ternary in the Nav
+.sign-in-cta {
+  background: linear-gradient(135deg, rgba(64, 145, 108, 0.2) 0%, rgba(45, 106, 79, 0.3) 100%);
+  border: 2px solid $accent-green;
+  border-radius: 16px;
+  padding: 0.5rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(26, 77, 46, 0.3);
+  animation: pulse-glow 3s ease-in-out infinite;
+  
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 8px 32px rgba(26, 77, 46, 0.3);
+    }
+    50% {
+      box-shadow: 0 8px 32px rgba(82, 183, 136, 0.5);
+    }
+  }
+
+  .cta-title {
+    color: $very-light-green;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
+
+    @media (max-width: $mobile) {
+      font-size: 1.2rem;
+    }
+  }
+
+  .cta-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+
+    @media (max-width: $mobile) {
+      font-size: 0.9rem;
+    }
+  }
+
+  .cta-button {
+    width: 100%;
+    background: linear-gradient(135deg, $accent-green 0%, $light-green 100%);
+    color: $white;
+    border: none;
+    padding: 1.25rem 2rem !important;
+    font-size: 0.955rem !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(64, 145, 108, 0.4);
+    font-family: 'Press Start 2P', cursive, sans-serif;
+
+    &:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(82, 183, 136, 0.6);
+      background: linear-gradient(135deg, $light-green 0%, $very-light-green 100%);
+    }
+
+    &:active {
+      transform: translateY(-1px);
+    }
+  }
+
+  .cta-features {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.7rem;
+    margin-top: 1.25rem;
+    line-height: 1.6;
+    text-align: left;
+
+    ul {
+      
+    }
+ 
+    @media (max-width: $mobile) {
+      font-size: 0.75rem;
+    }
+  }
+}
