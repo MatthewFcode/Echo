@@ -32,7 +32,7 @@ function Nav() {
   }
 
   const handleSignOut = () => {
-    logout({ returnTo: window.location.origin })
+    logout({ logoutParams: { returnTo: window.location.origin } })
   }
 
   const handleSignIn = () => {
