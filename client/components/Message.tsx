@@ -60,14 +60,15 @@ export default function Message() {
     )
 
     if (formState.file) newMessage.append('uploaded_file', formState.file)
-    else newMessage.append('image', formState.image)
+    else newMessage.append('image', formState.image as string)
 
     await addMessage.mutateAsync({ newMessage, token })
     setFormState(empty)
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files) setFormState({ ...formState, file: e.target.files[0] })
+    if (e.target.files)
+      setFormState({ ...formState, file: e.target.files[0] as File })
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {

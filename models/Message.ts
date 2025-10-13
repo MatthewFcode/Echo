@@ -7,7 +7,7 @@ export interface MessageData {
   image?: string
   userId: number
   timeStamp: string
-  file?: undefined
+  file?: undefined | File
 }
 
 export interface Message extends MessageData {
