@@ -55,8 +55,8 @@ function Chat() {
     if (chatById.data && currentUser) {
       // Check if current user is either user1 or user2 in this chat
       const isAuthorized =
-        chatById.data.u1Id === currentUser.id ||
-        chatById.data.u2Id === currentUser.id
+        chatById.data.user_id === currentUser.id ||
+        chatById.data.user_id2 === currentUser.id
 
       // If user is NOT authorized (not part of this chat), kick them out
       if (!isAuthorized) {
