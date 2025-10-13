@@ -691,4 +691,199 @@ main {
   }
 }
 
+// Registration styling 
+// Registration Page
+.register-container {
+  padding: 3rem;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
+  @media (max-width: $tablet) {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+  }
+
+  @media (max-width: $mobile) {
+    margin-left: 0;
+    width: 100%;
+    padding: 2rem 1rem;
+  }
+}
+
+.register-content {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 8px 32px $shadow;
+  max-width: 500px;
+  width: 100%;
+  border: 2px solid $accent-green;
+
+  @media (max-width: $mobile) {
+    padding: 2rem 1.5rem;
+  }
+
+  h1 {
+    color: $primary-green;
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 700;
+
+    @media (max-width: $mobile) {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+.register-error {
+  background: #fee;
+  border: 2px solid #dc2626;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #dc2626;
+  font-weight: 600;
+
+  button {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #b91c1c;
+    }
+  }
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      color: $secondary-green;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    input[type="text"] {
+      padding: 1rem;
+      border: 2px solid $accent-green;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: white;
+      color: $primary-green;
+
+      &:focus {
+        outline: none;
+        border-color: $light-green;
+        box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.2);
+      }
+
+      &::placeholder {
+        color: rgba(26, 77, 46, 0.4);
+      }
+    }
+
+    input[type="file"] {
+      padding: 1rem;
+      border: 2px dashed $accent-green;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: rgba(82, 183, 136, 0.05);
+      color: $primary-green;
+
+      &:hover {
+        border-color: $light-green;
+        background: rgba(82, 183, 136, 0.1);
+      }
+
+      &::file-selector-button {
+        background: $accent-green;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        margin-right: 1rem;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: $light-green;
+        }
+      }
+    }
+  }
+
+  .submit-button {
+    padding: 1.25rem 2rem;
+    background: $accent-green;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover:not(:disabled) {
+      background: $light-green;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px $hover-shadow;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.not-authenticated {
+  margin-left: 320px;
+  width: calc(100% - 320px);
+  padding: 3rem;
+  text-align: center;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: $tablet) {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+  }
+
+  @media (max-width: $mobile) {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  h1 {
+    color: $very-light-green;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+}
