@@ -529,7 +529,7 @@ footer {
 .news-ticker {
   display: flex;
   white-space: nowrap;
-  animation: scroll-left 50s linear infinite;
+  animation: scroll-left 100s linear infinite;
   
   &:hover {
     animation-play-state: paused;
@@ -588,9 +588,10 @@ footer {
 }
 
 .news-item-title {
-  font-size: 0.8rem;
+  font-size: 1.25rem;
   font-weight: 500;
- 
+  font-family: 'Orbitron';
+  
 
   @media (max-width: $mobile) {
     font-size: 0.75rem;
@@ -599,10 +600,14 @@ footer {
 }
 
 .news-separator {
-  color: $accent-green;
-  margin: 0 1rem;
+  // color: $accent-green;
+  padding-left: 4rem;
+  
   font-weight: bold;
   font-size: 1.2rem;
+  position: relative;
+  bottom: 1.15rem;
+  
 }
 
 // Main Layout (back to original)
@@ -685,3 +690,5 @@ main {
     }
   }
 }
+
+

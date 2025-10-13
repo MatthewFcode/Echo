@@ -1,4 +1,4 @@
-export interface Finance {
+export interface News {
   url: string
   url_mobile: string
   title: string
