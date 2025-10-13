@@ -8,7 +8,8 @@ export async function financeNews() {
   )
 
   const englishArticles = result.body.articles.filter(
-    (article: News) => article.language === 'English',
+    (article: News) =>
+      article.language === 'English' && article.socialimage.trim() !== '',
   )
   return englishArticles
 }
@@ -18,7 +19,8 @@ export async function softwareDevNews() {
     'https://api.gdeltproject.org/api/v2/doc/doc?query=software%20development&querylang=english&mode=ArtList&format=json&maxrecords=20&timespan=1d',
   )
   const englishArticles = result.body.articles.filter(
-    (article: News) => article.language === 'English',
+    (article: News) =>
+      article.language === 'English' && article.socialimage.trim() !== '',
   )
 
   return englishArticles
@@ -30,7 +32,9 @@ export async function newsFromNewZealand() {
   )
   const englishArticles = result.body.articles.filter(
     (article: News) =>
-      article.language === 'English' && article.sourcecountry !== 'India',
+      article.language === 'English' &&
+      article.sourcecountry !== 'India' &&
+      article.socialimage.trim() !== '',
   )
 
   return englishArticles
