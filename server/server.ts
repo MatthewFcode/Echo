@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express'
 import * as Path from 'node:path'
 import path from 'path'
