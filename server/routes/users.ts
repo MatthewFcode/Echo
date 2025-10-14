@@ -1,21 +1,12 @@
 import { Router } from 'express'
 import checkJwt, { JwtRequest } from '../auth0.ts'
 import multer from 'multer'
-import path from 'path'
 import * as db from '../db/functions/users.ts'
+import cloudinary from '../cloudinary.js'
+import { unlink } from 'node:fs/promises'
 
 const router = Router()
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.resolve('public/images'))
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`)
-  },
-})
-
-const upload = multer({ storage: storage })
+const upload = multer({ dest: 'tmp/' })
 
 router.get('/', checkJwt, async (req: JwtRequest, res) => {
   try {
@@ -58,8 +49,29 @@ router.post(
       const auth0Id = req.auth?.sub
       const { userName } = req.body
       let profilePic = ''
+
+      //upload to cloudinary
       if (req.file) {
-        profilePic = `/images/${req.file.filename}`
+        try {
+          // Upload to Cloudinary
+          const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'echo_profiles',
+            transformation: [{ width: 300, height: 300, crop: 'fill' }],
+          })
+          profilePic = result.secure_url
+
+          // Clean up temp file
+          await unlink(req.file.path)
+        } catch (uploadErr) {
+          console.error('Cloudinary upload error:', uploadErr)
+          // Clean up temp file even if upload fails
+          try {
+            await unlink(req.file.path)
+          } catch (unlinkErr) {
+            console.error('Failed to delete temp file:', unlinkErr)
+          }
+          throw new Error('Failed to upload image')
+        }
       }
       const convert = {
         user_name: userName as string,
