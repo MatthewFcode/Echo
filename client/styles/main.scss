@@ -1026,3 +1026,154 @@ main {
     }
   }
 }
+
+//Welcome overlay styles // Welcome Overlay Styles
+.welcome-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(13, 31, 20, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+.welcome-overlay-content {
+  background: linear-gradient(135deg, rgba(45, 106, 79, 0.95) 0%, rgba(26, 77, 46, 0.98) 100%);
+  border: 3px solid $accent-green;
+  border-radius: 24px;
+  padding: 3rem;
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(64, 145, 108, 0.3);
+  animation: slideUp 0.4s ease;
+  position: relative;
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @media (max-width: $mobile) {
+    padding: 2rem 1.5rem;
+    max-width: 95%;
+  }
+
+  img {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    animation: float 3s ease-in-out infinite;
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @media (max-width: $mobile) {
+      width: 80px;
+    }
+  }
+
+  h1 {
+    color: $very-light-green;
+    font-size: 1.7rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+    letter-spacing: 1px;
+    animation: pulse 2s ease-in-out infinite;
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.02);
+      }
+    }
+
+    @media (max-width: $mobile) {
+      font-size: 1.8rem;
+    }
+  }
+
+  p {
+    color: $cream;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+
+    @media (max-width: $mobile) {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+  }
+
+  button {
+    background: linear-gradient(135deg, $accent-green 0%, $light-green 100%);
+    color: $white;
+    border: none;
+    padding: 1.25rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(64, 145, 108, 0.4);
+    font-family: 'Press Start 2P', cursive, sans-serif;
+    position: relative;
+    right: 1.05rem;
+    overflow: hidden;
+    
+    
+
+    &:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(82, 183, 136, 0.6);
+      background: linear-gradient(135deg, $light-green 0%, $very-light-green 100%);
+
+      &::before {
+        width: 300px;
+        height: 300px;
+      }
+    }
+
+    &:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    @media (max-width: $mobile) {
+      padding: 1rem 2rem;
+      font-size: 0.85rem;
+    }
+  }
+}
