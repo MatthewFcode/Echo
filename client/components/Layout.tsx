@@ -29,6 +29,7 @@ export default function Layout() {
 
         <NewsRotator />
       </header>
+
       <main>
         <Theme>
           <Nav />

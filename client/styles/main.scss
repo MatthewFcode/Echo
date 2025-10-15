@@ -1177,3 +1177,238 @@ main {
     }
   }
 }
+
+// Typing Test Styles
+.typing-test-page {
+  margin-left: 320px;
+  width: calc(100% - 320px);
+  padding: 3rem;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #568770;
+
+  @media (max-width: $tablet) {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+  }
+
+  @media (max-width: $mobile) {
+    margin-left: 0;
+    width: 100%;
+    padding: 1.5rem 1rem;
+  }
+}
+
+.typing-test-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 8px 32px $shadow;
+  max-width: 900px;
+  width: 100%;
+  border: 3px solid $accent-green;
+  text-align: center;
+
+  @media (max-width: $mobile) {
+    padding: 2rem 1.5rem;
+  }
+}
+
+.typing-test-title {
+  color: $primary-green;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: 2px;
+  animation: pulse 2s ease-in-out infinite;
+
+  @media (max-width: $mobile) {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.typing-test-text {
+  background: rgba(26, 77, 46, 0.05);
+  border: 2px solid $accent-green;
+  border-radius: 16px;
+  padding: 2rem;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  line-height: 2;
+  margin-bottom: 2rem;
+  font-family: 'Courier New', monospace;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+
+  span {
+    transition: color 0.1s ease;
+  }
+
+  @media (max-width: $mobile) {
+    font-size: 1.1rem;
+    padding: 1.5rem;
+    min-height: 100px;
+  }
+}
+
+.typing-test-input {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  font-size: 1.2rem;
+  border: 3px solid $accent-green;
+  border-radius: 16px;
+  background: white;
+  color: $primary-green;
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+
+  &::placeholder {
+    color: rgba(26, 77, 46, 0.4);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $light-green;
+    box-shadow: 0 0 0 4px rgba(82, 183, 136, 0.2);
+  }
+
+  &:disabled {
+    background: rgba(26, 77, 46, 0.05);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  @media (max-width: $mobile) {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+}
+
+.typing-test-results {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(64, 145, 108, 0.1) 0%, rgba(45, 106, 79, 0.15) 100%);
+  border-radius: 16px;
+  border: 2px solid $accent-green;
+  animation: slideUp 0.4s ease;
+
+  h3 {
+    color: $primary-green;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    @media (max-width: $mobile) {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+.results-stats {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+
+  @media (max-width: $mobile) {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 2rem;
+  background: white;
+  border-radius: 12px;
+  border: 2px solid $accent-green;
+  box-shadow: 0 4px 12px rgba(26, 77, 46, 0.1);
+  min-width: 150px;
+
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
+}
+
+.stat-label {
+  color: $secondary-green;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  color: $primary-green;
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family: 'Press Start 2P', cursive, sans-serif;
+
+  @media (max-width: $mobile) {
+    font-size: 2rem;
+  }
+}
+
+.play-again-button {
+  padding: 1.25rem 2.5rem;
+  background: linear-gradient(135deg, $accent-green 0%, $light-green 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 6px 20px rgba(64, 145, 108, 0.4);
+  font-family: 'Press Start 2P', cursive, sans-serif;
+
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(82, 183, 136, 0.6);
+    background: linear-gradient(135deg, $light-green 0%, $very-light-green 100%);
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  @media (max-width: $mobile) {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: 0.85rem;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Footer
+footer {
+  background: $primary-green;
+  padding: 1rem;
+  text-align: center;
+  color: $very-light-green;
+  border-top: 2px solid $accent-green;
+}
