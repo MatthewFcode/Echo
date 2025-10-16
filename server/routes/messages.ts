@@ -38,7 +38,6 @@ router.post('/', upload.single('uploaded_file'), async (req, res) => {
       profilePhoto = `/images/${req.file?.filename}`
     }
 
-
     const convert = {
       message,
       time_stamp: timeStamp,
@@ -49,7 +48,6 @@ router.post('/', upload.single('uploaded_file'), async (req, res) => {
     const result = await db.sendChat(convert)
 
     // This will broadcast the changes to the server to other clients connected to the websocket
-
 
     wss.clients.forEach((client) => {
       if (client.readyState === ws.OPEN) {
@@ -62,14 +60,14 @@ router.post('/', upload.single('uploaded_file'), async (req, res) => {
       }
     })
 
-
     res.status(201).json(result) //{ newMessage: result }
-
-
   } catch (err) {
     res.sendStatus(400).json('something went wrong with the image url')
   }
 })
+
+//update message
+router.patch('/')
 
 // Delete Message
 router.delete('/:id', async (req, res) => {
