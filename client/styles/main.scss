@@ -229,7 +229,7 @@ input[type="text"][placeholder*="Search"] {
   padding: 2rem;
   padding-bottom: 180px;
   min-height: calc(100vh - 80px);
-  background-color: #568770;
+  background-color: $accent-green; 
 
   @media (max-width: $tablet) {
     margin-left: 280px;
@@ -463,10 +463,13 @@ input[type="text"][placeholder*="Search"] {
 // Welcome/Home Page
 .welcome-message,
 .home-page {
+
   margin-left: 320px;
-  width: calc(100% - 320px);
-  padding: 3rem;
-  text-align: center;
+     width: calc(100% - 320px);
+     padding: 3rem;
+     text-align: center;
+     min-height: calc(100vh - 80px);
+     background-color: #568770;
 
   @media (max-width: $tablet) {
     margin-left: 280px;
@@ -1188,7 +1191,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #568770;
+  background-color: $accent-green;
 
   @media (max-width: $tablet) {
     margin-left: 280px;
@@ -1413,3 +1416,4 @@ footer {
   color: $very-light-green;
   border-top: 2px solid $accent-green;
 }
+

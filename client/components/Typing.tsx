@@ -117,7 +117,7 @@ const Typing = () => {
 
     // Move to next line when user types the full line length
     if (inputValue.length > currentLine.length) {
-      setLines((prev) => [...prev, generateWords(10)])
+      setLines((prev) => [...prev, generateWords(13)])
       setUserInput('')
       setLinesCompleted((prev) => prev + 1)
     }
@@ -193,7 +193,7 @@ const Typing = () => {
             className="typing-test-title"
             style={{ margin: 0, fontSize: '1.5rem' }}
           >
-            ⌨️ Typing Speed Test ⌨️
+            💻 Typing Speed Test 💻
           </h2>
           <div
             style={{
