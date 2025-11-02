@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import * as db from '../db/functions/chats.ts'
+import { wss } from '../server.ts'
+import ws from 'ws'
 
 const router = Router()
 
@@ -34,6 +36,17 @@ router.post('/', async (req, res) => {
 
     if (check == undefined) {
       const result = await db.createChat({ userId, userId2 })
+      wss.clients.forEach((client) => {
+        if (client.readyState === ws.OPEN) {
+          client.send(
+            JSON.stringify({
+              type: 'database_change',
+              messsage: 'New chat created',
+              action: 'chat_created',
+            }),
+          )
+        }
+      })
       res.status(201).json(result)
     } else {
       res.json([check.id])

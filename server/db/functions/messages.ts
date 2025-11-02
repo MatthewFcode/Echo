@@ -36,7 +36,7 @@ export async function getMessagesById(chat_id: number) {
         'user_id as userId',
         'time_stamp as timeStamp',
         'users.user_name as usersUserName',
-        'users.profile_pic as userProfilePic'
+        'users.profile_pic as userProfilePic',
       )
     return result as Message[]
   } catch (err) {
@@ -56,7 +56,27 @@ export async function sendChat(newChat: {
     const result = await db('messages').insert(newChat)
     return result
   } catch (err) {
-    console.error(err)
+    console.log(err)
+  }
+}
+
+export async function updateChat(
+  id: number,
+  user_id: number,
+  updatedChat: { message: string; time_stamp: string },
+) {
+  try {
+    await db('messages')
+      .where('messages.id', id)
+      .andWhere('messages.user_id', user_id)
+      .update(updatedChat)
+    const result = await db('messages')
+      .where('messages.id', id)
+      .join('users', 'messages.user_id', 'users.id')
+      .select('users.user_name', 'users.profile_pic')
+    console.log(result)
+    return result
+  } catch (err) {
     console.log(err)
   }
 }
