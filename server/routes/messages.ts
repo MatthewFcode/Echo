@@ -81,7 +81,7 @@ router.delete('/:id', async (req, res) => {
         client.send(
           JSON.stringify({
             type: 'database_change',
-            message: 'New message added',
+            message: 'New message deleted',
           }),
         )
       }

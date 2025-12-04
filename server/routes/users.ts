@@ -4,6 +4,8 @@ import multer from 'multer'
 import * as db from '../db/functions/users.ts'
 import cloudinary from '../cloudinary.js'
 import { unlink } from 'node:fs/promises'
+import { wss } from '../server.ts'
+import ws from 'ws'
 
 const router = Router()
 const upload = multer({ dest: 'tmp/' })
@@ -80,6 +82,18 @@ router.post(
       }
 
       const result = await db.createUser(convert)
+
+      wss.clients.forEach((client) => {
+        if (client.readyState === ws.OPEN) {
+          client.send(
+            JSON.stringify({
+              type: 'database_change',
+              messsage: 'New user created',
+              action: 'user_created',
+            }),
+          )
+        }
+      })
       res.status(201).json(result)
     } catch (err) {
       console.log(err)

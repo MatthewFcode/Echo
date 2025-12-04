@@ -16,7 +16,7 @@ export function useAddMessageMutation<TData = unknown, TVariables = unknown>(
   const mutation = useMutation({
     mutationFn,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['addMessage'] })
+      //queryClient.invalidateQueries({ queryKey: ['addMessage'] })
       queryClient.invalidateQueries({ queryKey: ['chatById'] })
       queryClient.invalidateQueries({ queryKey: ['messageByChatId'] })
     },
