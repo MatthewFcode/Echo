@@ -18,6 +18,7 @@ export function useAddMessageMutation<TData = unknown, TVariables = unknown>(
     onSuccess: () => {
       //queryClient.invalidateQueries({ queryKey: ['addMessage'] })
       queryClient.invalidateQueries({ queryKey: ['chatById'] })
+      queryClient.invalidateQueries({ queryKey: ['chatsById'] })
       queryClient.invalidateQueries({ queryKey: ['messageByChatId'] })
     },
   })
@@ -36,7 +37,7 @@ export function useGetMessageByChatId(id: number) {
   const { user, getAccessTokenSilently } = useAuth0()
 
   const query1 = useQuery({
-    queryKey: ['chatById', id],
+    queryKey: ['chatById'],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
       return getChatById(token, id)
@@ -45,7 +46,7 @@ export function useGetMessageByChatId(id: number) {
   })
 
   const query2 = useQuery({
-    queryKey: ['messageByChatId', id],
+    queryKey: ['messageByChatId'],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
       return getMessageByChatId({ token, id })

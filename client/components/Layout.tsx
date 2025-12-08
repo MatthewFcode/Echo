@@ -25,7 +25,7 @@ export default function Layout() {
         queryClient.invalidateQueries({ queryKey: ['chatsById'] })
         queryClient.invalidateQueries({ queryKey: ['chats'] })
         queryClient.invalidateQueries({ queryKey: ['chatById'] })
-        //queryClient.invalidateQueries({ queryKey: [''] })
+        queryClient.invalidateQueries({ queryKey: ['messageByChatId'] })
       }
       ws.onclose = () => {
         console.log('WebSocket closed')

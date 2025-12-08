@@ -10,7 +10,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 export function useChats(userId: number) {
   const { user, getAccessTokenSilently } = useAuth0()
   return useQuery({
-    queryKey: ['chats', userId],
+    queryKey: ['chats'],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
       return getChats(token, userId)
